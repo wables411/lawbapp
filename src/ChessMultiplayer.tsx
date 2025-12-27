@@ -25,7 +25,7 @@ import { getDefaultPieceSet, getPixelawbsPieceSet, type ChessPieceSet } from './
 import { checkPixelawbsNFTOwnership, type NFTVerificationResult } from './utils/nftVerification';
 import Popup from './components/Popup';
 import { PlayerProfile } from './components/PlayerProfile';
-import { HowToContent } from '../baseapp/HowToContent';
+import { HowToContent } from './components/HowToContent';
 import { triggerHapticImpact, triggerHapticSelection, triggerHapticNotification, getSafeAreaInsets, isBaseMiniApp } from './utils/baseMiniapp';
 import { ThemeToggle } from './components/ThemeToggle';
 

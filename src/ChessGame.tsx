@@ -11,11 +11,11 @@ import {
 import { getDisplayName } from './utils/displayName';
 import { firebaseProfiles } from './firebaseProfiles';
 // Removed blocking connection test - loading data directly with timeout
-import { BaseAppChessMultiplayer } from './BaseAppChessMultiplayer';
+import { ChessMultiplayer } from './components/ChessMultiplayer';
 import { CHESS_PIECE_SETS, getDefaultPieceSet, type ChessPieceSet } from './config/chessPieceSets';
 import Popup from './components/Popup';
 import { PlayerProfile } from './components/PlayerProfile';
-import { HowToContent } from '../baseapp/HowToContent';
+import { HowToContent } from './components/HowToContent';
 import { ThemeToggle } from './components/ThemeToggle';
 import { 
   triggerHapticImpact, 
@@ -2303,7 +2303,7 @@ export const BaseAppChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize
 
   if (isOnline) {
     return (
-      <BaseAppChessMultiplayer 
+      <ChessMultiplayer 
         onClose={onClose} 
         onMinimize={onMinimize} 
         fullscreen={fullscreen}
