@@ -3486,6 +3486,18 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     align-self: center !important; /* Prevent flex child from stretching to full width */
     flex-shrink: 0 !important; /* Prevent shrinking */
     gap: 12px !important; /* Space between buttons */
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Ensure button wrapper divs don't cause overlap */
+  .chess-game.mobile .piece-set-selection-panel > div[style*="display:flex"],
+  .chess-game.baseapp .piece-set-selection-panel > div[style*="display:flex"],
+  .chess-game.mobile .difficulty-selection-panel > div[style*="display:flex"],
+  .chess-game.baseapp .difficulty-selection-panel > div[style*="display:flex"] {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
   
   .chess-game.mobile .piece-set-selection-panel button,

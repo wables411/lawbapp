@@ -1680,8 +1680,8 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
             <p style={{fontSize:'1.1rem',color:'#ff0000',marginBottom:24,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Choose your preferred chess set.</p>
             
             {/* Piece Set Dropdown */}
-            <div style={{display:'flex',justifyContent:'center',marginBottom:24}}>
-              <div style={{ position: 'relative', minWidth: '200px' }}>
+            <div style={{display:'flex',justifyContent:'center',marginBottom: isMobile ? '16px' : '24px', width: '100%'}}>
+              <div style={{ position: 'relative', minWidth: '200px', width: '100%', maxWidth: '300px' }}>
                 <button
                   type="button"
                   onClick={() => setShowPieceSetDropdown(!showPieceSetDropdown)}
@@ -1691,10 +1691,12 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                     background: '#000000',
                     color: '#ff0000',
                     cursor: 'pointer',
+                    width: '100%',
                     minWidth: '200px',
                     textAlign: 'left',
                     fontWeight: 'bold',
-                    fontSize: '1em'
+                    fontSize: '1em',
+                    boxSizing: 'border-box'
                   }}
                 >
                   {getPieceSetDisplayName(selectedPieceSet.id)}
@@ -1734,25 +1736,33 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               </div>
             </div>
 
-            <button 
-              className={`piece-set-btn start-btn`}
-              onClick={() => { setShowPieceSetSelector(false); setShowDifficulty(true); }}
-              style={{ 
-                background: 'transparent',
-                color: '#ff0000',
-                fontWeight: 'bold',
-                fontSize: '1.3em',
-                padding: '18px 48px',
-                borderRadius: 0,
-                boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
-                border: '1px solid #ff0000',
-                cursor: 'pointer',
-                letterSpacing: 1,
-                marginBottom: 8
-              }}
-            >
-              <span role="img" aria-label="chess">♟️🦞</span> Continue
-            </button>
+            <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: isMobile ? '8px' : '16px', marginBottom: '8px'}}>
+              <button 
+                className={`piece-set-btn start-btn`}
+                onClick={() => { setShowPieceSetSelector(false); setShowDifficulty(true); }}
+                style={{ 
+                  background: 'transparent',
+                  color: '#ff0000',
+                  fontWeight: 'bold',
+                  fontSize: isMobile ? '1.1em' : '1.3em',
+                  padding: isMobile ? '14px 32px' : '18px 48px',
+                  borderRadius: 0,
+                  boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
+                  border: '1px solid #ff0000',
+                  cursor: 'pointer',
+                  letterSpacing: 1,
+                  whiteSpace: 'nowrap',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  width: 'auto',
+                  maxWidth: '100%'
+                }}
+              >
+                <span role="img" aria-label="chess">♟️🦞</span>
+                <span>Continue</span>
+              </button>
+            </div>
 
             {/* Back to Chess Button */}
             <div style={{marginTop: '16px', display: 'flex', justifyContent: 'center', width: 'auto', maxWidth: '100%'}}>
@@ -1788,38 +1798,72 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
       <div className="difficulty-controls-col">
         <div className="difficulty-selection-panel" style={{background:'transparent',borderRadius:0,padding: isMobile ? '8px 12px' : '32px 24px',paddingTop: isMobile ? '4px' : undefined,marginTop: isMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
           <h2 style={{fontWeight:700,letterSpacing:1,fontSize: isMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: isMobile ? '8px' : 16,marginTop: isMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Difficulty</h2>
-          <p style={{fontSize:'1.1rem',color:'#ff0000',marginBottom:24,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Compete against the computer to climb the leaderboard.</p>
-          <div style={{display:'flex',justifyContent:'center',gap:16,marginBottom:24}}>
+          <p style={{fontSize: isMobile ? '1em' : '1.1rem',color:'#ff0000',marginBottom: isMobile ? '16px' : '24px',textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Compete against the computer to climb the leaderboard.</p>
+          <div style={{display:'flex',justifyContent:'center',gap: isMobile ? '12px' : '16px',marginBottom: isMobile ? '16px' : '24px', flexWrap: 'wrap', width: '100%'}}>
             <button
               className={`difficulty-btn${difficulty === 'easy' ? ' selected' : ''}`}
-              style={{background:difficulty==='easy'?'#ff0000':'transparent',color:difficulty==='easy'?'#fff':'#ff0000',fontWeight:'bold',fontSize:'1.1em',padding:'12px 32px',borderRadius:0,border:'1px solid #ff0000',cursor:'pointer',letterSpacing:1,boxShadow:difficulty==='easy'?'0 0 6px #ff0000, 0 0 2px #ff0000':'none'}}
+              style={{
+                background: difficulty==='easy'?'#ff0000':'transparent',
+                color: difficulty==='easy'?'#fff':'#ff0000',
+                fontWeight:'bold',
+                fontSize: isMobile ? '1em' : '1.1em',
+                padding: isMobile ? '10px 24px' : '12px 32px',
+                borderRadius:0,
+                border:'1px solid #ff0000',
+                cursor:'pointer',
+                letterSpacing:1,
+                boxShadow:difficulty==='easy'?'0 0 6px #ff0000, 0 0 2px #ff0000':'none',
+                whiteSpace: 'nowrap',
+                flexShrink: 0
+              }}
               onClick={()=>setDifficulty('easy')}
             >Easy</button>
             <button
               className={`difficulty-btn${difficulty === 'hard' ? ' selected' : ''}`}
-              style={{background:difficulty==='hard'?'#ff0000':'transparent',color:difficulty==='hard'?'#fff':'#ff0000',fontWeight:'bold',fontSize:'1.1em',padding:'12px 32px',borderRadius:0,border:'1px solid #ff0000',cursor:'pointer',letterSpacing:1,boxShadow:difficulty==='hard'?'0 0 6px #ff0000, 0 0 2px #ff0000':'none'}}
+              style={{
+                background:difficulty==='hard'?'#ff0000':'transparent',
+                color:difficulty==='hard'?'#fff':'#ff0000',
+                fontWeight:'bold',
+                fontSize: isMobile ? '1em' : '1.1em',
+                padding: isMobile ? '10px 24px' : '12px 32px',
+                borderRadius:0,
+                border:'1px solid #ff0000',
+                cursor:'pointer',
+                letterSpacing:1,
+                boxShadow:difficulty==='hard'?'0 0 6px #ff0000, 0 0 2px #ff0000':'none',
+                whiteSpace: 'nowrap',
+                flexShrink: 0
+              }}
               onClick={()=>setDifficulty('hard')}
             >Hard</button>
           </div>
-          <button 
-            className={`difficulty-btn start-btn`}
-            onClick={() => { startGame(); }}
-            style={{ 
-              background: 'transparent',
-              color: '#ff0000',
-              fontWeight: 'bold',
-              fontSize: '1.3em',
-              padding: '18px 48px',
-              borderRadius: 0,
-              boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
-              border: '1px solid #ff0000',
-              cursor: 'pointer',
-              letterSpacing: 1,
-              marginBottom: 8
-            }}
-          >
-            <span role="img" aria-label="chess">♟️</span> Start Match
-          </button>
+          <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: isMobile ? '8px' : '16px', marginBottom: '8px'}}>
+            <button 
+              className={`difficulty-btn start-btn`}
+              onClick={() => { startGame(); }}
+              style={{ 
+                background: 'transparent',
+                color: '#ff0000',
+                fontWeight: 'bold',
+                fontSize: isMobile ? '1.1em' : '1.3em',
+                padding: isMobile ? '14px 32px' : '18px 48px',
+                borderRadius: 0,
+                boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
+                border: '1px solid #ff0000',
+                cursor: 'pointer',
+                letterSpacing: 1,
+                whiteSpace: 'nowrap',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                width: 'auto',
+                maxWidth: '100%'
+              }}
+            >
+              <span role="img" aria-label="chess">♟️</span>
+              <span>Start Match</span>
+            </button>
+          </div>
 
           {/* Sidebar toggle buttons removed - use menu button instead */}
 

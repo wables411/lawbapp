@@ -144,9 +144,12 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
         width: '100%',
         maxWidth: '100vw',
         height: 'calc(100vh - 50px)',
-        padding: isMobile ? '8px' : '10px',
+        paddingTop: isMobile ? '60px' : '10px', // Extra top padding for Base MiniApp
+        paddingLeft: isMobile ? '12px' : '10px',
+        paddingRight: isMobile ? '12px' : '10px',
+        paddingBottom: isMobile ? '60px' : '10px', // Extra bottom padding for navbar
         zIndex: 10,
-        overflow: isMobile ? 'hidden' : 'visible',
+        overflow: isMobile ? 'auto' : 'visible',
         boxSizing: 'border-box'
       }}>
         {desktopIcons.map(icon => (
