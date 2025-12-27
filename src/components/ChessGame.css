@@ -3460,7 +3460,7 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 12px !important; /* Reduced gap to prevent overlap */
+    gap: 16px !important; /* Increased gap to prevent overlap */
     /* ROOT FIX: Don't force height - let content determine height */
     height: auto !important;
     min-height: auto !important;
