@@ -1,4 +1,6 @@
-# LAWB Base App
+# LAWB Base MiniApp
+
+**Base/Farcaster MiniApp version** - This is the Base MiniApp deployment, completely separate from the lawb.xyz web browser version (see [lawb2](https://github.com/wables411/lawb2) repo).
 
 A Base Mini App (Farcaster/Base) featuring a desktop-style UI with chess game, wallet integration, and real-time multiplayer functionality.
 
@@ -38,13 +40,13 @@ npm run preview
 
 ## Deployment
 
-This project is configured for Netlify deployment with:
+This Base MiniApp can be deployed to Netlify (separate account from lawb.xyz web version):
 
 - Build command: `npm run build`
 - Publish directory: `dist`
 - Node version: 18
 
-The `netlify.toml` file contains all necessary configuration including redirects and function settings.
+The `netlify.toml` file contains the Base MiniApp-specific configuration. This is a clean separation from the web browser version - no shared functions or web browser-specific code.
 
 ## Project Structure
 

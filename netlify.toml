@@ -1,38 +1,18 @@
+# Base MiniApp Netlify Configuration
+# This is the Base/Farcaster MiniApp version - separate from lawb.xyz web browser version
+
 [build]
   publish = "dist"
-  functions = "functions"
+  command = "npm run build"
 
 [build.environment]
   NODE_VERSION = "18"
 
-[[redirects]]
-  from = "/api/stockfish"
-  to = "/.netlify/functions/stockfish"
-  status = 200
-
-[[redirects]]
-  from = "/api/game-monitor"
-  to = "/.netlify/functions/game-monitor"
-  status = 200
-
-[[redirects]]
-  from = "/api/alchemy-nft"
-  to = "/.netlify/functions/alchemy-nft"
-  status = 200
-
-[[redirects]]
-  from = "/api/game-monitor-simple"
-  to = "/.netlify/functions/game-monitor-simple"
-  status = 200
-
+# SPA redirect - all routes to index.html for React Router
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[functions]
-  directory = "functions"
-  node_bundler = "esbuild"
 
 [dev]
   framework = "vite"

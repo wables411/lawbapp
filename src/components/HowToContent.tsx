@@ -4,12 +4,11 @@ interface HowToContentProps {
   variant?: 'default' | 'mobile';
 }
 
-// Web browser version - ONLY shows Sanko content, no Base app detection
+// Base MiniApp version - How to Play content
 export const HowToContent: React.FC<HowToContentProps> = ({ variant = 'default' }) => {
-  // Desktop/Web version (Sanko) - NO Base app detection, this is web browser only
   return (
     <div className={`how-to-section ${variant === 'mobile' ? 'mobile' : ''}`}>
-      <h4>How to Play Lawb Chess Beta 3000 on Sanko</h4>
+      <h4>How to Play Lawb Chess Beta 3000</h4>
       <div className="how-to-content">
         <p><strong>Objective:</strong> Checkmate your opponent&apos;s king by placing it under attack with no legal moves to escape.</p>
         <p><strong>Match Setup:</strong> Blue pieces start at the bottom, Red pieces at the top. Blue always moves first.</p>
