@@ -57,12 +57,26 @@ const getIconSize = () => {
   return { width: 80, height: 80 };
 };
 
+// Calculate icon spacing based on Base MiniApp detection
+const getIconSpacing = () => {
+  if (typeof window !== 'undefined' && isBaseMiniApp()) {
+    return {
+      hGap: 20, // More horizontal spacing in Base Mini App
+      vGap: 40, // Much more vertical padding in Base Mini App to prevent overlap
+      startLeft: 12,
+      startTop: 60 // Account for header/navbar
+    };
+  }
+  return {
+    hGap: 10,
+    vGap: 4,
+    startLeft: 10,
+    startTop: 10
+  };
+};
+
 const ICON_WIDTH = getIconSize().width;
 const ICON_HEIGHT = getIconSize().height;
-const ICON_HGAP = isBaseMiniApp() ? 15 : 10; // More horizontal spacing in Base Mini App
-const ICON_VGAP = isBaseMiniApp() ? 35 : 4; // Much more vertical padding in Base Mini App to prevent overlap
-const START_LEFT = 10;
-const START_TOP = 10;
 
 interface DesktopProps {
   onIconClick: (action: string, popupId?: string, url?: string) => void;
@@ -86,6 +100,7 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
   // Recalculate positions for visible desktop icons, top-left oriented
   const getPositions = () => {
     const positions: Record<string, { x: number; y: number }> = {};
+    const spacing = getIconSpacing();
     
     if (isMobile) {
       // Mobile: Use 2-column grid that fits screen
@@ -94,8 +109,8 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
         const col = index % 2;
         const row = Math.floor(index / 2);
         positions[icon.id] = {
-          x: START_LEFT + col * (ICON_WIDTH + ICON_HGAP),
-          y: START_TOP + row * (ICON_HEIGHT + ICON_VGAP),
+          x: spacing.startLeft + col * (ICON_WIDTH + spacing.hGap),
+          y: spacing.startTop + row * (ICON_HEIGHT + spacing.vGap),
         };
         index++;
       });
@@ -104,8 +119,8 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
       let row = 0, col = 0;
       desktopIcons.forEach(icon => {
         positions[icon.id] = {
-          x: START_LEFT + col * (ICON_WIDTH + ICON_HGAP),
-          y: START_TOP + row * (ICON_HEIGHT + ICON_VGAP),
+          x: spacing.startLeft + col * (ICON_WIDTH + spacing.hGap),
+          y: spacing.startTop + row * (ICON_HEIGHT + spacing.vGap),
         };
         row++;
         if (row >= 4) { row = 0; col++; }

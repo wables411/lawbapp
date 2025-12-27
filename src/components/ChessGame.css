@@ -3455,6 +3455,7 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     margin: 0 auto !important;
     padding: 16px !important;
     padding-top: 8px !important; /* Reduced top padding since header is fixed */
+    padding-bottom: 20px !important; /* Extra bottom padding for navbar */
     box-sizing: border-box !important;
     display: flex !important;
     flex-direction: column !important;
