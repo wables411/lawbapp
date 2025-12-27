@@ -1,0 +1,813 @@
+.lawb-theme-toggle {
+  background: rgba(255, 0, 0, 0.1);
+  border: 2px solid #ff0000;
+  color: #ff0000;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  padding: 0;
+  margin: 0 8px;
+  box-shadow: 0 0 6px rgba(255, 0, 0, 0.3);
+}
+
+.lawb-theme-toggle:hover {
+  background: rgba(255, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  transform: scale(1.1);
+}
+
+.lawb-theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Light Mode - Stock colorway with animated background (formerly Underwater) */
+/* Note: Light mode is the default (no class), but these rules apply if light mode class is present */
+.lawb-app-light-mode body,
+.lawb-app-light-mode html,
+.lawb-app-light-mode #root {
+  background: url('/assets/background.gif') no-repeat center center fixed !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  color: #000000 !important;
+  overflow: hidden !important;
+}
+
+/* Ensure chessboard and pieces are always visible in default (light) mode */
+body:not(.lawb-app-dark-mode) .chessboard,
+body:not(.lawb-app-dark-mode) [class*="chessboard"],
+body:not(.lawb-app-dark-mode) .piece,
+body:not(.lawb-app-dark-mode) [class*="piece"],
+body:not(.lawb-app-dark-mode) .chessboard-container,
+body:not(.lawb-app-dark-mode) [class*="chessboard-container"],
+body:not(.lawb-app-dark-mode) .square,
+body:not(.lawb-app-dark-mode) [class*="square"],
+body:not(.lawb-app-dark-mode) .board-row,
+body:not(.lawb-app-dark-mode) [class*="board-row"] {
+  /* CRITICAL: Preserve inline background-image styles - don't override them */
+  /* Use inherit to preserve inline styles */
+  background-image: inherit !important;
+  background: inherit !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Default (no theme class) - this is light mode */
+/* No class = light mode (default state) */
+body:not(.lawb-app-dark-mode),
+html:not(.lawb-app-dark-mode) {
+  background: url('/assets/background.gif') no-repeat center center fixed !important;
+  background-size: cover !important;
+  color: #000000 !important;
+}
+
+/* Light mode popups - use light grey containers for better visibility */
+.lawb-app-light-mode .popup-0-2-17,
+.lawb-app-light-mode [class*="popup"],
+.lawb-app-light-mode [class*="Popup"] {
+  background: #c0c0c0 !important;
+  border-color: #ffffff !important;
+  border-style: outset !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  color: #000000 !important;
+}
+
+.lawb-app-light-mode .chess-chat-window {
+  background: #c0c0c0 !important;
+  border-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.lawb-app-light-mode .chess-chat-window {
+  background: #ffffff !important;
+  border-color: #cccccc !important;
+}
+
+.lawb-app-light-mode .chat-header {
+  background: #0066cc !important;
+}
+
+.lawb-app-light-mode .taskbar {
+  background: #e0e0e0 !important;
+  border-color: #999999 !important;
+}
+
+.lawb-app-light-mode .chess-page,
+.lawb-app-light-mode .chess-content {
+  background: transparent !important;
+  background-image: url('/assets/background.gif') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  color: #000000 !important;
+}
+
+.lawb-app-light-mode .chess-multiplayer-lobby,
+.lawb-app-light-mode .create-form,
+.lawb-app-light-mode .game-item,
+.lawb-app-light-mode .chess-header {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #000000 !important;
+  border-color: #cccccc !important;
+}
+
+/* Light mode - ensure center-area and game-stable-layout are visible and transparent */
+.lawb-app-light-mode .center-area,
+.lawb-app-light-mode [class*="center-area"],
+.lawb-app-light-mode .game-stable-layout,
+.lawb-app-light-mode [class*="game-stable-layout"],
+.lawb-app-light-mode .game-content,
+.lawb-app-light-mode [class*="game-content"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #000000 !important;
+}
+
+.lawb-app-light-mode .center-area *,
+.lawb-app-light-mode .game-stable-layout *,
+.lawb-app-light-mode .game-content * {
+  color: #000000 !important;
+}
+
+.lawb-app-light-mode .chess-header h2 {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
+
+/* Light mode button styling - EXCLUDE buttons with inline styles (piece selection panel) */
+.lawb-app-light-mode button:not([style*="color"]):not(.piece-set-btn):not(.start-btn):not([class*="piece-set"]):not([class*="difficulty"]) {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: #cccccc !important;
+  color: #000000 !important;
+}
+
+.lawb-app-light-mode button:not([style*="color"]):not(.piece-set-btn):not(.start-btn):not([class*="piece-set"]):not([class*="difficulty"]):hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+.lawb-app-light-mode .create-btn,
+.lawb-app-light-mode .create-confirm-btn {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.lawb-app-light-mode .create-btn:hover,
+.lawb-app-light-mode .create-confirm-btn:hover {
+  background: #333333 !important;
+}
+
+.lawb-app-light-mode h3,
+.lawb-app-light-mode h4 {
+  color: #000000 !important;
+}
+
+.lawb-app-light-mode .status-bar,
+.lawb-app-light-mode .game-details {
+  color: #000000 !important;
+}
+
+/* Light mode for all text elements - EXCLUDE buttons to preserve inline styles */
+.lawb-app-light-mode p,
+.lawb-app-light-mode span:not(button *):not([style*="color"]),
+.lawb-app-light-mode div:not(button):not([style*="color"]):not(.piece-set-selection-panel *):not(.difficulty-selection-panel *),
+.lawb-app-light-mode label,
+.lawb-app-light-mode input,
+.lawb-app-light-mode select,
+.lawb-app-light-mode textarea {
+  color: #000000 !important;
+}
+
+.lawb-app-light-mode a {
+  color: #0066cc !important;
+}
+
+.lawb-app-light-mode a:hover {
+  color: #000000 !important;
+}
+
+/* Dark Mode - Black backgrounds with terminal green text */
+/* Remove ALL background images in dark mode - COMPREHENSIVE OVERRIDE */
+/* BUT preserve chess board and piece images/colors */
+.lawb-app-dark-mode,
+.lawb-app-dark-mode body,
+.lawb-app-dark-mode html,
+.lawb-app-dark-mode #root {
+  background-image: none !important;
+  background-color: #000000 !important;
+  /* CRITICAL: Use background-color not background shorthand to avoid overriding children's background-image */
+  color: #00ff00 !important;
+  overflow: hidden !important;
+}
+
+.lawb-app-dark-mode [class*="baseapp"],
+.lawb-app-dark-mode [class*="BaseApp"],
+.lawb-app-dark-mode [id*="root"],
+.lawb-app-dark-mode [class*="desktop"],
+.lawb-app-dark-mode [class*="Desktop"],
+.lawb-app-dark-mode [class*="chess-game"],
+.lawb-app-dark-mode [class*="chess-page"],
+.lawb-app-dark-mode [class*="chess-content"],
+.lawb-app-dark-mode [class*="game-stable-layout"],
+.lawb-app-dark-mode [class*="game-content"],
+.lawb-app-dark-mode [class*="center-area"] {
+  background-image: none !important;
+  background-color: #000000 !important;
+  /* CRITICAL: Use background-color not background shorthand to avoid overriding background-image */
+  color: #00ff00 !important;
+}
+
+/* Universal dark mode background override - catch ALL elements except chess board/pieces */
+/* Exclude entire chessboard container tree AND player profile stats overlay from background removal */
+/* Also exclude squares and board-row to preserve chessboard structure */
+/* CRITICAL: Use background-color instead of background to avoid overriding background-image */
+/* CRITICAL FIX: Exclude chessboard-related elements from universal selector */
+/* The :not() selector must exclude ALL chessboard/piece elements and their children */
+/* CRITICAL: Also exclude elements with inline background-image styles */
+.lawb-app-dark-mode *:not(.chessboard):not([class*="chessboard"]):not(.piece):not([class*="piece"]):not(.chessboard-container):not([class*="chessboard-container"]):not(.square):not([class*="square"]):not(.board-row):not([class*="board-row"]):not(.player-profile-stats-overlay):not([class*="player-profile-stats-overlay"]):not(.chess-main-area):not([class*="chess-main-area"]):not([style*="background-image"]):not([style*="backgroundImage"]):not([style*="url"]) {
+  background-image: none !important;
+  background-color: #000000 !important;
+}
+
+/* CRITICAL: Explicitly preserve chessboard - MUST come after universal selector */
+/* Use higher specificity to override universal selector */
+.lawb-app-dark-mode .chessboard,
+.lawb-app-dark-mode [class*="chessboard"] {
+  /* CRITICAL: Explicitly preserve background-image - inline styles can't override !important */
+  /* So we must NOT set background-image: none here, and ensure no other rule does */
+  background-color: transparent !important;
+  /* DO NOT set background-image here - let inline style handle it */
+}
+
+/* HIGHEST SPECIFICITY: Explicitly preserve chessboard background-image after ALL other rules */
+.lawb-app-dark-mode div.chessboard,
+.lawb-app-dark-mode div[class*="chessboard"],
+.lawb-app-dark-mode .chessboard-container .chessboard,
+.lawb-app-dark-mode [class*="chessboard-container"] [class*="chessboard"] {
+  /* CRITICAL: This rule comes last and has highest specificity to preserve inline background-image */
+  /* We can't use !important on background-image because that would override inline styles */
+  /* Instead, we ensure no background-image rule is set here, allowing inline style to work */
+  background-color: transparent !important;
+}
+
+/* CRITICAL: Preserve all children of chessboard */
+.lawb-app-dark-mode .chessboard *,
+.lawb-app-dark-mode [class*="chessboard"] * {
+  background-color: transparent !important;
+  /* Don't override background-image - let inline styles handle it */
+}
+
+/* CRITICAL: Explicitly preserve pieces - MUST override universal selector */
+.lawb-app-dark-mode .piece,
+.lawb-app-dark-mode [class*="piece"] {
+  /* CRITICAL: Don't set background-image - let inline style handle it */
+  background-color: transparent !important;
+  /* Don't override background-image - inline style has it */
+}
+
+/* CRITICAL FIX: Explicitly override universal selector for chessboard and pieces */
+/* These rules MUST come AFTER the universal selector and have higher specificity */
+/* DO NOT set background-image here - let inline styles handle it */
+.lawb-app-dark-mode .chessboard,
+.lawb-app-dark-mode [class*="chessboard"] {
+  /* CRITICAL: Don't set background-image at all - let inline style handle it */
+  /* Inline styles have higher specificity than CSS classes (unless !important) */
+  background-color: transparent !important;
+  /* DO NOT set background-image here - inline style from component has it */
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: grid !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.lawb-app-dark-mode .chessboard *,
+.lawb-app-dark-mode [class*="chessboard"] * {
+  background-color: transparent !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+.lawb-app-dark-mode .piece,
+.lawb-app-dark-mode [class*="piece"],
+.lawb-app-dark-mode .square .piece,
+.lawb-app-dark-mode [class*="square"] .piece,
+.lawb-app-dark-mode .chessboard .piece,
+.lawb-app-dark-mode [class*="chessboard"] .piece {
+  /* CRITICAL: Don't override background-image - inline styles have it */
+  /* Only ensure background-color is transparent so background-image shows */
+  background-color: transparent !important;
+  /* CRITICAL: Explicitly allow background-image from inline styles */
+  background-image: inherit !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  position: absolute !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 2 !important;
+}
+
+.lawb-app-dark-mode .square,
+.lawb-app-dark-mode [class*="square"],
+.lawb-app-dark-mode .board-row,
+.lawb-app-dark-mode [class*="board-row"] {
+  background-color: transparent !important;
+  background-image: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Specifically preserve chessboard container and all its children */
+/* CRITICAL: Use background-image instead of background to preserve inline styles */
+.lawb-app-dark-mode .chessboard-container,
+.lawb-app-dark-mode [class*="chessboard-container"] {
+  background-color: transparent !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+
+.lawb-app-dark-mode .chessboard-container *,
+.lawb-app-dark-mode [class*="chessboard-container"] * {
+  /* Don't override background - let inline styles and component styles handle it */
+  background-color: transparent !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* ROOT FIX: Removed duplicate rules - chessboard/pieces already excluded from universal selector */
+/* These are now handled by the rules above */
+
+/* Ensure player profile stats overlay is transparent in dark mode - HIGHEST PRIORITY */
+/* Must come AFTER universal selector and have higher specificity */
+.lawb-app-dark-mode .player-profile-stats-overlay,
+.lawb-app-dark-mode [class*="player-profile-stats-overlay"],
+.lawb-app-dark-mode div.player-profile-stats-overlay,
+.lawb-app-dark-mode [class*="PlayerProfile"] .player-profile-stats-overlay {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Exclude chess board container from dark mode background removal - REMOVED */
+/* Chessboard container should inherit its background image */
+
+.lawb-app-dark-mode body,
+.lawb-app-dark-mode html {
+  background-color: #000000 !important;
+  background-image: none !important;
+  background-size: auto !important;
+  background-attachment: fixed !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  /* CRITICAL: Use background-color not background shorthand to avoid overriding children's background-image */
+  color: #00ff00 !important;
+}
+
+/* Dark mode for body/html children - EXCLUDE buttons, chessboard elements, and selection panels */
+/* ROOT FIX: Exclude chessboard and selection panels from universal background rules */
+/* CRITICAL: Must exclude ALL chessboard-related elements including children */
+/* CRITICAL: Also exclude elements with inline backgroundImage/background-image styles */
+.lawb-app-dark-mode body *:not(button):not([style*="color"]):not(.piece-set-selection-panel):not(.piece-set-selection-panel *):not(.difficulty-selection-panel):not(.difficulty-selection-panel *):not(.chessboard):not([class*="chessboard"]):not(.piece):not([class*="piece"]):not(.chessboard-container):not([class*="chessboard-container"]):not(.chessboard-container *):not([class*="chessboard-container"] *):not(.square):not([class*="square"]):not(.board-row):not([class*="board-row"]):not(.chess-main-area):not(.chess-main-area *):not([style*="background-image"]):not([style*="backgroundImage"]):not([style*="background: url"]):not([style*="backgroundImage: url"]),
+.lawb-app-dark-mode html *:not(button):not([style*="color"]):not(.piece-set-selection-panel):not(.piece-set-selection-panel *):not(.difficulty-selection-panel):not(.difficulty-selection-panel *):not(.chessboard):not([class*="chessboard"]):not(.piece):not([class*="piece"]):not(.chessboard-container):not([class*="chessboard-container"]):not(.chessboard-container *):not([class*="chessboard-container"] *):not(.square):not([class*="square"]):not(.board-row):not([class*="board-row"]):not(.chess-main-area):not(.chess-main-area *):not([style*="background-image"]):not([style*="backgroundImage"]):not([style*="background: url"]):not([style*="backgroundImage: url"]) {
+  background-color: #000000 !important;
+  background-image: none !important;
+  background-size: auto !important;
+  background-attachment: fixed !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  color: #00ff00 !important;
+}
+
+/* Override ALL chess game background rules in dark mode */
+.lawb-app-dark-mode .chess-game,
+.lawb-app-dark-mode .chess-game.game-active,
+.lawb-app-dark-mode [class*="chess-game"],
+.lawb-app-dark-mode [class*="chess-game"].game-active {
+  background-image: none !important;
+  background: #000000 !important;
+  background-size: auto !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Override body/html background in dark mode - highest priority */
+.lawb-app-dark-mode body,
+.lawb-app-dark-mode html,
+body.lawb-app-dark-mode,
+html.lawb-app-dark-mode {
+  background: #000000 !important;
+  background-image: none !important;
+  background-size: auto !important;
+  background-attachment: fixed !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Dark mode popups - black containers with green borders and glow */
+.lawb-app-dark-mode .popup-0-2-17,
+.lawb-app-dark-mode [class*="popup"],
+.lawb-app-dark-mode [class*="Popup"] {
+  background: #000000 !important;
+  border-color: #00ff00 !important;
+  border-style: outset !important;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.4), 0 2px 8px rgba(0, 255, 0, 0.3) !important;
+  color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .chess-chat-window {
+  background: #000000 !important;
+  border-color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .chat-header {
+  background: #000000 !important;
+  border-color: #00ff00 !important;
+}
+
+/* Profile picture should not be covered by black background */
+.lawb-app-dark-mode [class*="PlayerProfile"] img,
+.lawb-app-dark-mode [class*="profile"] img,
+.lawb-app-dark-mode img[alt="Profile"],
+.lawb-app-dark-mode img[alt="Current profile picture"] {
+  background: #ffffff !important;
+  z-index: 2 !important;
+}
+
+.lawb-app-dark-mode [class*="PlayerProfile"] > div[style*="background: '#fff'"],
+.lawb-app-dark-mode [class*="PlayerProfile"] > div[style*="background: #fff"] {
+  background: #ffffff !important;
+  z-index: 1 !important;
+}
+
+.lawb-app-dark-mode .taskbar {
+  background: #000000 !important;
+  border-color: #00ff00 !important;
+  color: #00ff00 !important;
+  box-shadow: 0 -2px 8px rgba(0, 255, 0, 0.2) !important;
+}
+
+.lawb-app-dark-mode .clock,
+.lawb-app-dark-mode [class*="clock"] {
+  background: #000000 !important;
+  color: #00ff00 !important;
+  border-color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .menuLink,
+.lawb-app-dark-mode .menu,
+.lawb-app-dark-mode [class*="menuLink"],
+.lawb-app-dark-mode [class*="menu"],
+.lawb-app-dark-mode button[class*="menuLink"],
+.lawb-app-dark-mode a[class*="menuLink"] {
+  background: #000000 !important;
+  color: #00ff00 !important;
+  border-color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .menuLink a,
+.lawb-app-dark-mode .menu a,
+.lawb-app-dark-mode [class*="menuLink"] a,
+.lawb-app-dark-mode button.menuLink,
+.lawb-app-dark-mode a.menuLink {
+  color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .menu button,
+.lawb-app-dark-mode .menu a,
+.lawb-app-dark-mode [class*="menu"] button,
+.lawb-app-dark-mode [class*="menu"] a {
+  color: #00ff00 !important;
+  background: #000000 !important;
+  border-color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .chess-menu-popup,
+.lawb-app-dark-mode [class*="chess-menu"] {
+  background: #000000 !important;
+  border-color: #00ff00 !important;
+  color: #00ff00 !important;
+  display: block !important;
+}
+
+.lawb-app-dark-mode .chess-menu-popup button,
+.lawb-app-dark-mode .chess-menu-popup a,
+.lawb-app-dark-mode [class*="chess-menu"] button,
+.lawb-app-dark-mode [class*="chess-menu"] a {
+  color: #00ff00 !important;
+  background: #000000 !important;
+  border-color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .menuLink:hover {
+  background: #001100 !important;
+  color: #00ff00 !important;
+}
+
+.lawb-app-light-mode .menuLink,
+.lawb-app-light-mode .menu,
+.lawb-app-light-mode [class*="menuLink"],
+.lawb-app-light-mode [class*="menu"],
+.lawb-app-light-mode .chess-menu-popup,
+.lawb-app-light-mode [class*="chess-menu-popup"] {
+  background: #c0c0c0 !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+.lawb-app-light-mode .menu button,
+.lawb-app-light-mode .menu a,
+.lawb-app-light-mode [class*="menu"] button,
+.lawb-app-light-mode [class*="menu"] a,
+.lawb-app-light-mode button.menuLink,
+.lawb-app-light-mode a.menuLink,
+.lawb-app-light-mode .chess-menu-popup button,
+.lawb-app-light-mode [class*="chess-menu-popup"] button {
+  color: #000000 !important;
+  background: #c0c0c0 !important;
+  border-color: #ffffff !important;
+}
+
+.lawb-app-light-mode .menuLink:hover {
+  background: #f0f0f0 !important;
+  color: #000000 !important;
+}
+
+.lawb-app-light-mode .taskbar {
+  background: #e0e0e0 !important;
+  border-color: #999999 !important;
+}
+
+/* Remove duplicate taskbar rule - already defined above */
+
+.lawb-app-light-mode .menuBtn {
+  background: #e0e0e0 !important;
+  color: #000000 !important;
+  border-color: #999999 !important;
+}
+
+.lawb-app-dark-mode .menuBtn {
+  background: #000000 !important;
+  color: #00ff00 !important;
+  border-color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .menuBtn:hover {
+  background: #001100 !important;
+  box-shadow: 0 0 8px rgba(0, 255, 0, 0.3) !important;
+}
+
+.lawb-app-dark-mode .chess-page,
+.lawb-app-dark-mode .chess-content,
+.lawb-app-dark-mode .chess-multiplayer-lobby,
+.lawb-app-dark-mode .create-form,
+.lawb-app-dark-mode .game-item,
+.lawb-app-dark-mode .chess-header {
+  background: #000000 !important;
+  color: #00ff00 !important;
+  border-color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .chess-header h2 {
+  color: #00ff00 !important;
+  text-shadow: 0 0 5px #00ff00 !important;
+}
+
+/* Ensure chess board and pieces always display full color */
+/* REMOVED: This rule was causing issues - inherit doesn't work for element's own inline styles */
+/* The chessboard and pieces need their inline background-image styles preserved */
+/* We handle this with more specific rules above that don't override background-image */
+
+/* Dark mode button styling - EXCLUDE buttons with inline styles (piece selection panel) */
+/* Preserve original button sizes - don't override width/height/padding */
+.lawb-app-dark-mode button:not([style*="color"]):not(.piece-set-btn):not(.start-btn):not([class*="piece-set"]):not([class*="difficulty"]):not(.menu-btn):not(.sidebar-menu-btn):not(.chess-controls button) {
+  background-color: #000000 !important;
+  border-color: #00ff00 !important;
+  color: #00ff00 !important;
+  /* Don't override size properties - preserve original button dimensions */
+}
+
+.lawb-app-dark-mode button:not([style*="color"]):not(.piece-set-btn):not(.start-btn):not([class*="piece-set"]):not([class*="difficulty"]):not(.menu-btn):not(.sidebar-menu-btn):not(.chess-controls button):hover {
+  background-color: #001100 !important;
+  box-shadow: 0 0 10px #00ff00 !important;
+}
+
+/* Preserve menu button sizes in dark mode */
+.lawb-app-dark-mode .menu-btn,
+.lawb-app-dark-mode .sidebar-menu-btn {
+  background-color: #000000 !important;
+  border-color: #00ff00 !important;
+  color: #00ff00 !important;
+  /* Keep original sizes from ChessGame.css */
+}
+
+.lawb-app-dark-mode .menu-btn:hover,
+.lawb-app-dark-mode .sidebar-menu-btn:hover {
+  background-color: #001100 !important;
+}
+
+.lawb-app-dark-mode .chess-controls button {
+  background-color: #000000 !important;
+  border-color: #00ff00 !important;
+  color: #00ff00 !important;
+  /* Keep original sizes from ChessGame.css */
+}
+
+.lawb-app-dark-mode .create-btn,
+.lawb-app-dark-mode .create-confirm-btn {
+  background: #000000 !important;
+  color: #00ff00 !important;
+  border-color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .create-btn:hover,
+.lawb-app-dark-mode .create-confirm-btn:hover {
+  background: #001100 !important;
+}
+
+.lawb-app-dark-mode h3,
+.lawb-app-dark-mode h4 {
+  color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode .status-bar,
+.lawb-app-dark-mode .game-details {
+  color: #00ff00 !important;
+}
+
+/* Dark mode for all text elements - terminal green */
+/* OVERRIDE ALL TEXT COLORS - ensure nothing is black */
+/* EXCLUDE buttons, chessboard elements, and elements with inline styles to preserve piece selection panel styling */
+.lawb-app-dark-mode p,
+.lawb-app-dark-mode span:not(.piece):not([class*="piece"]):not(button *):not([style*="color"]):not(.square *):not([class*="square"] *),
+.lawb-app-dark-mode div:not(.chessboard):not([class*="chessboard"]):not(.piece):not([class*="piece"]):not(button):not([style*="color"]):not(.piece-set-selection-panel *):not(.difficulty-selection-panel *):not(.square):not([class*="square"]):not(.board-row):not([class*="board-row"]):not(.chessboard-container):not([class*="chessboard-container"]),
+.lawb-app-dark-mode label,
+.lawb-app-dark-mode input,
+.lawb-app-dark-mode select,
+.lawb-app-dark-mode textarea,
+.lawb-app-dark-mode h1,
+.lawb-app-dark-mode h2,
+.lawb-app-dark-mode h3,
+.lawb-app-dark-mode h4,
+.lawb-app-dark-mode h5,
+.lawb-app-dark-mode h6,
+.lawb-app-dark-mode button:not([style*="color"]):not(.piece-set-btn):not(.start-btn):not([class*="piece-set"]):not([class*="difficulty"]),
+.lawb-app-dark-mode a {
+  color: #00ff00 !important;
+}
+
+/* Exception: chess board and pieces keep their colors */
+.lawb-app-dark-mode .chessboard,
+.lawb-app-dark-mode [class*="chessboard"],
+.lawb-app-dark-mode .piece,
+.lawb-app-dark-mode [class*="piece"] {
+  color: inherit !important;
+}
+
+/* Override Desktop component inline background */
+/* CRITICAL: Exclude chessboard from this rule - it needs its background-image */
+.lawb-app-dark-mode [style*="background.gif"]:not(.chessboard):not([class*="chessboard"]),
+.lawb-app-dark-mode [style*="background: url"]:not(.chessboard):not([class*="chessboard"]) {
+  background: #000000 !important;
+  background-image: none !important;
+}
+
+/* Override MemeGenerator inline background */
+.lawb-app-dark-mode [style*='backgroundImage: "url("/assets/background.gif")"'] {
+  background: #000000 !important;
+  background-image: none !important;
+}
+
+/* Override Mobile component background */
+.lawb-app-dark-mode [class*="mobileContainer"] {
+  background: #000000 !important;
+  background-image: none !important;
+  color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode a {
+  color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode a:hover {
+  color: #00ff00 !important;
+  text-shadow: 0 0 5px #00ff00 !important;
+}
+
+/* Dark mode - console grey elements become black */
+.lawb-app-dark-mode [class*="icon"],
+.lawb-app-dark-mode .iconLabel,
+.lawb-app-dark-mode [class*="iconLabel"],
+.lawb-app-dark-mode [class*="taskbar"],
+.lawb-app-dark-mode [class*="menuBtn"],
+.lawb-app-dark-mode [class*="statusSection"],
+.lawb-app-dark-mode .lawb-theme-menu-item {
+  background: #000000 !important;
+  color: #00ff00 !important;
+  border-color: #00ff00 !important;
+}
+
+/* Dark mode - icon labels specifically */
+.lawb-app-dark-mode [class*="iconLabel"] {
+  background: #000000 !important;
+  color: #00ff00 !important;
+  border-color: #00ff00 !important;
+}
+
+/* Dark mode - Meme Generator */
+.lawb-app-dark-mode [class*="meme-generator"],
+.lawb-app-dark-mode [class*="MemeGenerator"] {
+  background: #000000 !important;
+  border-color: #00ff00 !important;
+  color: #00ff00 !important;
+}
+
+.lawb-app-dark-mode [class*="meme-generator"] *,
+.lawb-app-dark-mode [class*="MemeGenerator"] * {
+  color: #00ff00 !important;
+}
+
+/* FINAL OVERRIDE: Highest specificity rule to preserve chessboard background-image */
+/* This MUST be the last rule in the file to ensure it overrides everything */
+/* CRITICAL: Match elements with inline style attribute containing backgroundImage */
+/* CRITICAL: We MUST use the actual inline style value, not try to preserve it */
+.lawb-app-dark-mode div.chessboard[style*="backgroundImage"],
+.lawb-app-dark-mode div.chessboard[style*="background-image"],
+.lawb-app-dark-mode div[class*="chessboard"][style*="backgroundImage"],
+.lawb-app-dark-mode div[class*="chessboard"][style*="background-image"],
+.lawb-app-dark-mode .chessboard-container div.chessboard[style*="backgroundImage"],
+.lawb-app-dark-mode .chessboard-container div.chessboard[style*="background-image"],
+.lawb-app-dark-mode [class*="chessboard-container"] [class*="chessboard"][style*="backgroundImage"],
+.lawb-app-dark-mode [class*="chessboard-container"] [class*="chessboard"][style*="background-image"] {
+  /* CRITICAL: Extract background-image from inline style using CSS attr() */
+  /* But attr() doesn't work for style attributes, so we need a different approach */
+  /* Instead, ensure NO rule sets background-image: none on these elements */
+  background-color: transparent !important;
+  /* DO NOT set background-image here - the inline style should work */
+  /* But if something is overriding it, we need to be more specific */
+}
+
+/* ABSOLUTE FINAL OVERRIDE: Use attribute selector to match inline style and preserve it */
+/* Match any chessboard element that has a backgroundImage in its style attribute */
+.lawb-app-dark-mode .chessboard[style*="url"],
+.lawb-app-dark-mode [class*="chessboard"][style*="url"],
+.lawb-app-dark-mode div.chessboard[style*="url"],
+.lawb-app-dark-mode div[class*="chessboard"][style*="url"] {
+  /* CRITICAL: The inline style has the background-image, we just need to not override it */
+  /* But CSS !important overrides inline styles, so we need to not set background-image at all */
+  background-color: transparent !important;
+  /* The inline style will work if we don't set background-image here */
+}
+
+/* Piece Selection Panel - Preserve button and text styling in both themes */
+/* These rules have HIGHEST specificity to override universal color rules */
+
+/* Headers and paragraphs should be red in both themes */
+.lawb-app-light-mode .piece-set-selection-panel h2,
+.lawb-app-light-mode .piece-set-selection-panel p,
+.lawb-app-light-mode .difficulty-selection-panel h2,
+.lawb-app-light-mode .difficulty-selection-panel p {
+  color: #ff0000 !important;
+}
+
+.lawb-app-dark-mode .piece-set-selection-panel h2,
+.lawb-app-dark-mode .piece-set-selection-panel p,
+.lawb-app-dark-mode .difficulty-selection-panel h2,
+.lawb-app-dark-mode .difficulty-selection-panel p {
+  color: #ff0000 !important;
+}
+
+/* Buttons in piece selection panel - explicitly preserve red color */
+/* These selectors have higher specificity than universal rules */
+.lawb-app-light-mode .piece-set-selection-panel button,
+.lawb-app-light-mode .piece-set-selection-panel button span,
+.lawb-app-light-mode .difficulty-selection-panel button,
+.lawb-app-light-mode .difficulty-selection-panel button span {
+  /* Explicitly set red color to override universal black text rule */
+  color: #ff0000 !important;
+}
+
+.lawb-app-dark-mode .piece-set-selection-panel button,
+.lawb-app-dark-mode .piece-set-selection-panel button span,
+.lawb-app-dark-mode .difficulty-selection-panel button,
+.lawb-app-dark-mode .difficulty-selection-panel button span {
+  /* Explicitly set red color to override universal green text rule */
+  color: #ff0000 !important;
+}

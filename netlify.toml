@@ -1,0 +1,39 @@
+[build]
+  publish = "dist"
+  functions = "functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/api/stockfish"
+  to = "/.netlify/functions/stockfish"
+  status = 200
+
+[[redirects]]
+  from = "/api/game-monitor"
+  to = "/.netlify/functions/game-monitor"
+  status = 200
+
+[[redirects]]
+  from = "/api/alchemy-nft"
+  to = "/.netlify/functions/alchemy-nft"
+  status = 200
+
+[[redirects]]
+  from = "/api/game-monitor-simple"
+  to = "/.netlify/functions/game-monitor-simple"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild"
+
+[dev]
+  framework = "vite"
+  targetPort = 5173 
