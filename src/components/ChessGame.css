@@ -3399,184 +3399,97 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     padding-top: 0 !important;
   }
   
-  /* Reduce padding on mobile for piece set and difficulty selectors - account for fixed header */
-  .chess-game.mobile .piece-set-selection-panel,
-  .chess-game.mobile .difficulty-selection-panel,
-  .chess-game.baseapp .piece-set-selection-panel,
-  .chess-game.baseapp .difficulty-selection-panel {
-    padding-top: 8px !important; /* Minimal top padding since header is fixed */
-    margin-top: 0 !important;
+  /* ============================================
+     CHESS SELECTION PAGES - CLEAN CSS
+     ============================================ */
+  
+  /* Container rows - no padding, start immediately after header */
+  .piece-set-selection-row,
+  .difficulty-selection-row {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
   
-  .chess-game.mobile .piece-set-selection-panel h2,
-  .chess-game.mobile .difficulty-selection-panel h2 {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+  /* Control columns */
+  .piece-set-controls-col,
+  .difficulty-controls-col {
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
   
-  /* Fix piece set selector layout on mobile - proper spacing and layout */
-  .chess-game.mobile .piece-set-selection-row,
-  .chess-game.baseapp .piece-set-selection-row,
-  .chess-game.mobile .difficulty-selection-row,
-  .chess-game.baseapp .difficulty-selection-row {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    padding-top: 0px !important; /* Remove padding - header is fixed, content starts immediately */
-    min-height: 0 !important;
-    height: auto !important;
-    max-height: none !important;
-    box-sizing: border-box !important;
+  /* Selection panels - minimal padding, compact layout */
+  .piece-set-selection-panel,
+  .difficulty-selection-panel {
+    width: 100%;
+    margin: 0;
+    padding: 8px 16px 60px 16px; /* Bottom padding for navbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    box-sizing: border-box;
   }
   
-  .chess-game.mobile .piece-set-controls-col,
-  .chess-game.baseapp .piece-set-controls-col,
-  .chess-game.mobile .difficulty-controls-col,
-  .chess-game.baseapp .difficulty-controls-col {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    min-height: 0 !important;
-    height: auto !important;
-    max-height: none !important;
-    box-sizing: border-box !important;
+  /* Headers - minimal spacing */
+  .piece-set-selection-panel h2,
+  .difficulty-selection-panel h2 {
+    margin: 0 0 4px 0;
+    padding: 0;
+    color: #ff0000;
+    text-shadow: 0 0 6px #ff0000, 0 0 2px #ff0000;
   }
   
-  .chess-game.mobile .piece-set-selection-panel,
-  .chess-game.baseapp .piece-set-selection-panel,
-  .chess-game.mobile .difficulty-selection-panel,
-  .chess-game.baseapp .difficulty-selection-panel {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    padding: 4px 12px !important;
-    padding-top: 2px !important; /* Minimal top padding - header is fixed */
-    padding-bottom: 20px !important; /* Extra bottom padding for navbar */
-    box-sizing: border-box !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 2px !important; /* Minimal gap - spacing handled by inline margins */
-    /* ROOT FIX: Don't force height - let content determine height */
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
+  /* Paragraphs - minimal spacing */
+  .piece-set-selection-panel p,
+  .difficulty-selection-panel p {
+    margin: 0 0 8px 0;
+    padding: 0;
+    color: #ff0000;
+    text-shadow: 0 0 6px #ff0000, 0 0 2px #ff0000;
   }
   
-  /* Ensure buttons don't overlap and are properly spaced */
-  /* Only apply width: 100% to non-button containers */
-  .chess-game.mobile .piece-set-selection-panel > *:not(button):not(div),
-  .chess-game.baseapp .piece-set-selection-panel > *:not(button):not(div) {
-    width: 100% !important;
-    max-width: 100% !important;
+  /* Button containers - stack vertically, centered */
+  .piece-set-selection-panel > div,
+  .difficulty-selection-panel > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 4px 0;
+    width: 100%;
+    max-width: 100%;
   }
   
-  /* ROOT FIX: Button containers should NOT stretch in flex column - use align-self to prevent stretching */
-  .chess-game.mobile .piece-set-selection-panel > div,
-  .chess-game.baseapp .piece-set-selection-panel > div,
-  .chess-game.mobile .difficulty-selection-panel > div,
-  .chess-game.baseapp .difficulty-selection-panel > div {
-    width: auto !important;
-    max-width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important; /* Stack buttons vertically */
-    justify-content: center !important;
-    align-items: center !important;
-    align-self: center !important; /* Prevent flex child from stretching to full width */
-    flex-shrink: 0 !important; /* Prevent shrinking */
-    gap: 2px !important; /* Minimal gap - spacing handled by inline margins */
-    margin: 0 !important;
-    margin-top: 0px !important; /* No top margin - spacing handled by inline styles */
-    padding: 0 !important;
+  /* Difficulty buttons container - horizontal layout */
+  .difficulty-selection-panel > div:first-of-type {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
   }
   
-  /* Ensure button wrapper divs don't cause overlap */
-  .chess-game.mobile .piece-set-selection-panel > div[style*="display:flex"],
-  .chess-game.baseapp .piece-set-selection-panel > div[style*="display:flex"],
-  .chess-game.mobile .difficulty-selection-panel > div[style*="display:flex"],
-  .chess-game.baseapp .difficulty-selection-panel > div[style*="display:flex"] {
-    flex-direction: column !important; /* Force vertical stacking */
-    flex-wrap: nowrap !important; /* Prevent wrapping that causes overlap */
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 2px !important; /* Minimal gap - spacing handled by inline margins */
+  /* Buttons - no extra margins, preserve inline styles */
+  .piece-set-selection-panel button,
+  .difficulty-selection-panel button {
+    margin: 0;
+    flex-shrink: 0;
   }
   
-  .chess-game.mobile .piece-set-selection-panel button,
-  .chess-game.baseapp .piece-set-selection-panel button,
-  .chess-game.mobile .difficulty-selection-panel button,
-  .chess-game.baseapp .difficulty-selection-panel button {
-    display: flex !important;
-    width: auto !important;
-    max-width: none !important;
-    margin: 0 !important; /* Remove auto margins that cause overlap */
-    justify-content: center !important;
-    align-items: center !important;
-    flex-shrink: 0 !important; /* Prevent buttons from shrinking */
-    /* Preserve inline styles for padding and sizing */
-  }
-  
-  /* Fix difficulty button container to prevent overlap - horizontal layout for Easy/Hard buttons */
-  .chess-game.mobile .difficulty-selection-panel > div[style*="display:flex"][style*="gap"],
-  .chess-game.baseapp .difficulty-selection-panel > div[style*="display:flex"][style*="gap"] {
-    flex-direction: row !important; /* Horizontal for Easy/Hard buttons */
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 12px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  
-  /* Ensure difficulty buttons don't overlap */
-  .chess-game.mobile .difficulty-selection-panel button.difficulty-btn,
-  .chess-game.baseapp .difficulty-selection-panel button.difficulty-btn {
-    margin: 0 !important;
-    flex-shrink: 0 !important;
-  }
-  
-  /* Piece selection panel - preserve red text and button styling in both themes */
-  /* These rules have high specificity to override universal theme color rules */
-  
-  /* Headers and paragraphs in piece selection panel should be red */
+  /* Theme color overrides - ensure red text in both themes */
   .lawb-app-light-mode .piece-set-selection-panel h2,
   .lawb-app-light-mode .piece-set-selection-panel p,
   .lawb-app-light-mode .difficulty-selection-panel h2,
-  .lawb-app-light-mode .difficulty-selection-panel p {
-    color: #ff0000 !important;
-  }
-  
+  .lawb-app-light-mode .difficulty-selection-panel p,
   .lawb-app-dark-mode .piece-set-selection-panel h2,
   .lawb-app-dark-mode .piece-set-selection-panel p,
   .lawb-app-dark-mode .difficulty-selection-panel h2,
   .lawb-app-dark-mode .difficulty-selection-panel p {
-    color: #ff0000 !important;
+    color: #ff0000;
   }
-  
-  /* Buttons in piece selection panel - preserve inline styles by not overriding */
-  /* Inline styles have higher specificity, but we need to ensure theme rules don't override */
-  .lawb-app-light-mode .piece-set-selection-panel button,
-  .lawb-app-light-mode .piece-set-selection-panel button span,
-  .lawb-app-light-mode .difficulty-selection-panel button,
-  .lawb-app-light-mode .difficulty-selection-panel button span {
-    /* Don't override - let inline styles take precedence */
-    /* This rule block ensures these selectors exist but don't force colors */
-    color: inherit;
-  }
-  
-  .lawb-app-dark-mode .piece-set-selection-panel button,
-  .lawb-app-dark-mode .piece-set-selection-panel button span,
-  .lawb-app-dark-mode .difficulty-selection-panel button,
-  .lawb-app-dark-mode .difficulty-selection-panel button span {
-    /* Don't override - let inline styles take precedence */
-    /* This rule block ensures these selectors exist but don't force colors */
-    color: inherit;
-  }
-  
-  /* REMOVED DUPLICATE - This rule is already defined above with align-self: center */
   
   /* Base Mini App (baseapp class) - Account for fixed Linux-style header (50px) */
   /* Only add padding-top when showing game, not selection screens */

@@ -1712,7 +1712,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
     return (
       <div className="piece-set-selection-row" style={{ justifyContent: 'center' }}>
         <div className="piece-set-controls-col">
-          <div className="piece-set-selection-panel" style={{background:'transparent',borderRadius:0,padding: effectiveIsMobile ? '4px 12px' : '32px 24px',paddingTop: effectiveIsMobile ? '2px' : undefined,marginTop: effectiveIsMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
+          <div className="piece-set-selection-panel" style={{background:'transparent',borderRadius:0,boxShadow:'none',textAlign:'center'}}>
             <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '2px' : 4,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Chess Set</h2>
             <p style={{fontSize: effectiveIsMobile ? '0.9rem' : '1.1rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '4px' : 8,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Choose your preferred chess set.</p>
             
