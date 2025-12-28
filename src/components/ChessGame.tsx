@@ -1712,12 +1712,12 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
     return (
       <div className="piece-set-selection-row" style={{ justifyContent: 'center' }}>
         <div className="piece-set-controls-col">
-          <div className="piece-set-selection-panel" style={{background:'transparent',borderRadius:0,padding: effectiveIsMobile ? '8px 12px' : '32px 24px',paddingTop: effectiveIsMobile ? '4px' : undefined,marginTop: effectiveIsMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
-            <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '4px' : 8,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Chess Set</h2>
-            <p style={{fontSize: effectiveIsMobile ? '0.9rem' : '1.1rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '12px' : 16,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Choose your preferred chess set.</p>
+          <div className="piece-set-selection-panel" style={{background:'transparent',borderRadius:0,padding: effectiveIsMobile ? '4px 12px' : '32px 24px',paddingTop: effectiveIsMobile ? '2px' : undefined,marginTop: effectiveIsMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
+            <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '2px' : 4,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Chess Set</h2>
+            <p style={{fontSize: effectiveIsMobile ? '0.9rem' : '1.1rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '4px' : 8,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Choose your preferred chess set.</p>
             
             {/* Piece Set Dropdown */}
-            <div style={{display:'flex',justifyContent:'center',marginBottom: effectiveIsMobile ? '8px' : '16px', width: '100%'}}>
+            <div style={{display:'flex',justifyContent:'center',marginBottom: effectiveIsMobile ? '4px' : '8px', width: '100%'}}>
               <div style={{ position: 'relative', minWidth: '200px', width: '100%', maxWidth: '300px' }}>
                 <button
                   type="button"
@@ -1773,7 +1773,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               </div>
             </div>
 
-            <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '4px' : '8px', marginBottom: '4px'}}>
+            <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '2px' : '4px', marginBottom: '2px'}}>
               <button 
                 className={`piece-set-btn start-btn`}
                 onClick={() => { setShowPieceSetSelector(false); setShowDifficulty(true); }}
@@ -1802,7 +1802,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
             </div>
 
             {/* Back to Chess Button */}
-            <div style={{marginTop: '8px', display: 'flex', justifyContent: 'center', width: 'auto', maxWidth: '100%'}}>
+            <div style={{marginTop: '4px', display: 'flex', justifyContent: 'center', width: 'auto', maxWidth: '100%'}}>
               <button
                 onClick={() => navigateTo('/chess')}
                 style={{ 
@@ -1874,7 +1874,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               onClick={()=>setDifficulty('hard')}
             >Hard</button>
           </div>
-          <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '4px' : '8px', marginBottom: '4px'}}>
+          <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '2px' : '4px', marginBottom: '2px'}}>
             <button 
               className={`difficulty-btn start-btn`}
               onClick={() => { startGame(); }}

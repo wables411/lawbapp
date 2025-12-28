@@ -3453,14 +3453,14 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    padding: 12px 16px !important;
-    padding-top: 4px !important; /* Minimal top padding - header is fixed */
+    padding: 4px 12px !important;
+    padding-top: 2px !important; /* Minimal top padding - header is fixed */
     padding-bottom: 20px !important; /* Extra bottom padding for navbar */
     box-sizing: border-box !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 8px !important; /* Reduced gap to prevent excessive spacing */
+    gap: 2px !important; /* Minimal gap - spacing handled by inline margins */
     /* ROOT FIX: Don't force height - let content determine height */
     height: auto !important;
     min-height: auto !important;
@@ -3488,9 +3488,9 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     align-items: center !important;
     align-self: center !important; /* Prevent flex child from stretching to full width */
     flex-shrink: 0 !important; /* Prevent shrinking */
-    gap: 8px !important; /* Space between buttons - reduced to prevent overlap */
+    gap: 2px !important; /* Minimal gap - spacing handled by inline margins */
     margin: 0 !important;
-    margin-top: 4px !important; /* Small top margin for spacing from title */
+    margin-top: 0px !important; /* No top margin - spacing handled by inline styles */
     padding: 0 !important;
   }
   
@@ -3503,7 +3503,7 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     flex-wrap: nowrap !important; /* Prevent wrapping that causes overlap */
     justify-content: center !important;
     align-items: center !important;
-    gap: 8px !important; /* Consistent gap */
+    gap: 2px !important; /* Minimal gap - spacing handled by inline margins */
   }
   
   .chess-game.mobile .piece-set-selection-panel button,
