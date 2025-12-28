@@ -54,12 +54,12 @@ const getIconSize = () => {
 };
 
 // Calculate icon spacing for Base/Farcaster miniapp - fit all icons without scroll
-const getIconSpacing = () => {
+const getIconSpacing = (iconCount: number) => {
   const iconSize = getIconSize();
-  const availableHeight = window.innerHeight - 50 - 60 - 16; // Viewport minus header, navbar, padding
-  const availableWidth = window.innerWidth - 24; // Viewport minus padding
+  const availableHeight = typeof window !== 'undefined' ? window.innerHeight - 50 - 60 - 16 : 600; // Viewport minus header, navbar, padding
+  const availableWidth = typeof window !== 'undefined' ? window.innerWidth - 24 : 400; // Viewport minus padding
   const iconsPerRow = 2;
-  const numRows = Math.ceil(desktopIcons.length / iconsPerRow);
+  const numRows = Math.ceil(iconCount / iconsPerRow);
   
   // Calculate vertical gap to fit all icons
   const totalIconHeight = numRows * iconSize.height;
