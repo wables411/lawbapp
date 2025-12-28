@@ -224,70 +224,53 @@
 }
 
 .center-area {
-  /* CRITICAL FIX: Don't use flex: 1 1 0 - it makes it grow to fill space */
-  /* Only use flex: 1 when showing game, not selection screens */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  min-width: 0;
-  min-height: 0;
-  max-width: 100%;
+  justify-content: center;
   width: 100%;
-  max-height: 100%;
+  height: calc(100vh - 50px); /* Full viewport minus fixed header */
   padding: 0;
-  padding-top: 50px !important; /* Account for fixed Linux-style header (50px) */
-  overflow-y: auto;
-  overflow-x: hidden;
+  margin: 0;
   box-sizing: border-box;
-  /* CRITICAL: Don't set height - let content determine it */
-  height: auto;
+  overflow: hidden;
 }
 
 .chessboard-container {
-  width: 100%;
-  height: 100%;
-  max-width: min(100vh, 100%);
-  max-height: min(100vh, 100%);
-  min-width: 0;
-  min-height: 0;
+  width: calc(100vw - 32px);
+  height: calc(100vw - 32px);
+  max-width: calc(100vh - 50px - 100px); /* Viewport minus header and game info */
+  max-height: calc(100vh - 50px - 100px);
+  min-width: 280px;
+  min-height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  margin-bottom: 2px; /* Exactly 2px space between chessboard and game info bar */
-  flex: 1 1 0;
   position: relative;
   box-sizing: border-box;
-  overflow: hidden;
   visibility: visible !important;
   opacity: 1 !important;
 }
 .chessboard {
   width: 100%;
   height: 100%;
-  max-width: 80vh;
-  max-height: 80vh;
   aspect-ratio: 1 / 1;
-  /* Default fallback background - will be overridden by inline style */
-  /* CRITICAL: Don't use !important on background-image - let inline style override it */
   background-image: url('/images/chessboard1.png');
-  background-size: cover !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-color: transparent !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
   border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.06);
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
   border: 1px solid #bbb;
-  display: grid !important;
+  display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
-  visibility: visible !important;
-  opacity: 1 !important;
-  filter: none !important;
-  -webkit-filter: none !important;
-  position: relative !important;
-  z-index: 1 !important;
+  visibility: visible;
+  opacity: 1;
+  position: relative;
+  z-index: 1;
 }
 
 /* Chess board styles */

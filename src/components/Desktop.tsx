@@ -53,13 +53,27 @@ const getIconSize = () => {
   return { width: 60, height: 60 };
 };
 
-// Calculate icon spacing for Base/Farcaster miniapp
+// Calculate icon spacing for Base/Farcaster miniapp - fit all icons without scroll
 const getIconSpacing = () => {
+  const iconSize = getIconSize();
+  const availableHeight = window.innerHeight - 50 - 60 - 16; // Viewport minus header, navbar, padding
+  const availableWidth = window.innerWidth - 24; // Viewport minus padding
+  const iconsPerRow = 2;
+  const numRows = Math.ceil(desktopIcons.length / iconsPerRow);
+  
+  // Calculate vertical gap to fit all icons
+  const totalIconHeight = numRows * iconSize.height;
+  const vGap = numRows > 1 ? Math.max(8, (availableHeight - totalIconHeight) / (numRows - 1)) : 0;
+  
+  // Calculate horizontal gap
+  const totalIconWidth = iconsPerRow * iconSize.width;
+  const hGap = Math.max(12, (availableWidth - totalIconWidth) / (iconsPerRow - 1));
+  
   return {
-    hGap: 20, // Horizontal spacing
-    vGap: 20, // Vertical spacing to prevent icons from going off-screen
+    hGap: Math.min(hGap, 24), // Cap at 24px
+    vGap: Math.min(vGap, 16), // Cap at 16px to fit all icons
     startLeft: 12,
-    startTop: 60 // Account for header/navbar
+    startTop: 8
   };
 };
 
@@ -86,7 +100,6 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
   // Always use 2-column grid for miniapp
   const getPositions = () => {
     const positions: Record<string, { x: number; y: number }> = {};
-    const spacing = getIconSpacing();
     
     let index = 0;
     desktopIcons.forEach(icon => {
@@ -131,12 +144,12 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
         width: '100%',
         maxWidth: '100vw',
         height: 'calc(100vh - 50px)',
-        paddingTop: '60px', // Top padding for Base MiniApp
+        paddingTop: '8px',
         paddingLeft: '12px',
         paddingRight: '12px',
-        paddingBottom: '60px', // Bottom padding for navbar
+        paddingBottom: '60px',
         zIndex: 10,
-        overflow: 'auto',
+        overflow: 'hidden',
         boxSizing: 'border-box'
       }}>
         {desktopIcons.map(icon => (
