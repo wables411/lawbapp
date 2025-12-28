@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { ChessGame } from './components/ChessGame';
 import { ChessMultiplayer } from './components/ChessMultiplayer';
 import { ChessChat } from './components/ChessChat';
-import { initBaseMiniApp, isBaseMiniApp, getSafeAreaInsets, applySafeAreaInsets } from './utils/baseMiniapp';
+import { initBaseMiniApp, getSafeAreaInsets, applySafeAreaInsets } from './utils/baseMiniapp';
 import './components/ChessMultiplayer.css';
 import './components/ChessPage.css';
 
 const ChessPage: React.FC = () => {
-  // Initialize Base Mini App SDK
+  // This is a Base/Farcaster miniapp - always initialize
   useEffect(() => {
     const initialize = async () => {
       await initBaseMiniApp();
@@ -31,17 +31,10 @@ const ChessPage: React.FC = () => {
     };
   }, []);
 
-  // Always mobile in Base miniapp, or if window is small
-  const isMobile = typeof window !== 'undefined' && (isBaseMiniApp() || window.innerWidth <= 768);
-
   const [gameMode, setGameMode] = useState<'singleplayer' | 'multiplayer'>('singleplayer');
   const [chatInviteCode, setChatInviteCode] = useState<string | undefined>();
   const [isInGame, setIsInGame] = useState(false);
   const [isChatVisible, setIsChatVisible] = useState(false);
-
-  useEffect(() => {
-    setIsChatVisible(false);
-  }, [isMobile]);
 
   const handleClose = () => {
     window.location.href = '/';
@@ -85,7 +78,7 @@ const ChessPage: React.FC = () => {
         maxWidth: '100vw',
         maxHeight: '100vh',
         // Account for navbar at bottom (50px)
-        paddingBottom: isMobile ? '50px' : '0',
+        paddingBottom: '50px',
       }}
     >
       <div 
@@ -97,8 +90,6 @@ const ChessPage: React.FC = () => {
           boxSizing: 'border-box',
           maxWidth: '100%',
           maxHeight: '100%',
-          // Ensure content doesn't overlap navbar
-          paddingBottom: isMobile ? '0' : '0',
         }}
       >
         {gameMode === 'singleplayer' ? (
@@ -108,7 +99,7 @@ const ChessPage: React.FC = () => {
             onGameStart={handleGameStart}
             onChatToggle={handleChatToggle}
             isChatMinimized={!isChatVisible}
-            isMobile={isMobile}
+            isMobile={true}
           />
         ) : (
           <ChessMultiplayer 
@@ -119,7 +110,7 @@ const ChessPage: React.FC = () => {
             onGameStart={handleGameStart}
             onChatToggle={handleChatToggle}
             isChatMinimized={!isChatVisible}
-            isMobile={isMobile}
+            isMobile={true}
           />
         )}
       </div>
@@ -131,7 +122,7 @@ const ChessPage: React.FC = () => {
           currentInviteCode={chatInviteCode}
           isDraggable={false}
           isResizable={false}
-          isMobile={isMobile}
+          isMobile={true}
         />
       )}
     </div>

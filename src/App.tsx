@@ -70,10 +70,10 @@ function App() {
   }, []);
 
   // Initialize Base Mini App SDK and apply safe area insets
+  // This is a Base/Farcaster miniapp - always initialize
   useEffect(() => {
     const initialize = async () => {
       await initBaseMiniApp();
-      
       
       // Always add body class for Base Mini App styles
       document.body.classList.add('base-miniapp');
@@ -85,20 +85,21 @@ function App() {
       // Get safe area insets and calculate popup size
       const insets = await getSafeAreaInsets();
       const navbarHeight = 50;
-      const padding = 16; // 8px on each side
+      const padding = 24; // 24px on each side
       
       const width = `calc(100vw - ${insets.left + insets.right + padding * 2}px)`;
       const height = `calc(100vh - ${insets.top + insets.bottom + navbarHeight + padding}px)`;
       
       setMiniappPopupSize({ width, height });
-      return () => {
-        // Cleanup: remove class when component unmounts
-        document.body.classList.remove('base-miniapp');
-        document.documentElement.classList.remove('base-miniapp');
-      };
     };
     
     void initialize();
+    
+    return () => {
+      // Cleanup: remove class when component unmounts
+      document.body.classList.remove('base-miniapp');
+      document.documentElement.classList.remove('base-miniapp');
+    };
   }, []);
 
   // Use a ref to track if we intentionally opened the chat (prevent accidental closes)

@@ -18,7 +18,6 @@ import { PlayerProfile } from './PlayerProfile';
 import { HowToContent } from './HowToContent';
 import { ThemeToggle } from './ThemeToggle';
 import ChessHeader from './ChessHeader';
-import { isBaseMiniApp } from '../utils/baseMiniapp';
 
 import './ChessGame.css';
 
@@ -255,11 +254,10 @@ const useLichessAPI = () => {
   return { openingData, isAnalyzing, getOpeningData, getMoveAnalysis };
 };
 
-export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, isMobile = false }) => {
-  // Detect Base Mini App for proper formatting
-  const isBaseApp = typeof window !== 'undefined' && isBaseMiniApp();
-  // Use Base Mini App detection or passed isMobile prop
-  const effectiveIsMobile = isBaseApp || isMobile;
+export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, isMobile = true }) => {
+  // This is a Base/Farcaster miniapp - always use mobile formatting
+  const effectiveIsMobile = true;
+  const isBaseApp = true;
   
   const { address: walletAddress, isConnected } = useAccount();
   const chainId = useChainId();

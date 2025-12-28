@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from './Icon';
 import Popup from './Popup';
 import MintPopup from './MintPopup';
@@ -8,7 +8,6 @@ import { ChessGame } from './ChessGame';
 import Taskbar from './Taskbar';
 import MediaGallery from './MediaGallery';
 import NFTDetailPopup from './NFTDetailPopup';
-import { isBaseMiniApp } from '../utils/baseMiniapp';
 
 interface DesktopIcon {
   id: string;
@@ -49,29 +48,18 @@ const ICONS: DesktopIcon[] = [
   { id: 'lawb', image: '/assets/lawbticker.gif', label: '$LAWB', action: 'popup', popupId: 'lawb-popup', row: 3, col: 2 },
 ];
 
-// Icon sizing - smaller for Base Mini App
+// Icon sizing for Base/Farcaster miniapp
 const getIconSize = () => {
-  if (typeof window !== 'undefined' && isBaseMiniApp()) {
-    return { width: 60, height: 60 };
-  }
-  return { width: 80, height: 80 };
+  return { width: 60, height: 60 };
 };
 
-// Calculate icon spacing based on Base MiniApp detection
+// Calculate icon spacing for Base/Farcaster miniapp
 const getIconSpacing = () => {
-  if (typeof window !== 'undefined' && isBaseMiniApp()) {
-    return {
-      hGap: 20, // More horizontal spacing in Base Mini App
-      vGap: 20, // Reduced vertical spacing to prevent icons from going off-screen
-      startLeft: 12,
-      startTop: 60 // Account for header/navbar
-    };
-  }
   return {
-    hGap: 10,
-    vGap: 4,
-    startLeft: 10,
-    startTop: 10
+    hGap: 20, // Horizontal spacing
+    vGap: 20, // Vertical spacing to prevent icons from going off-screen
+    startLeft: 12,
+    startTop: 60 // Account for header/navbar
   };
 };
 
@@ -86,11 +74,8 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
   // Only show desktop icons (row >= 0, col >= 0)
   const desktopIcons = ICONS.filter(icon => icon.row >= 0 && icon.col >= 0);
   
-  // Base Mini App should ALWAYS use mobile/miniapp layout (vertical, mobile-like)
-  // regardless of actual device or window width
-  // This ensures consistent appearance in Farcaster/Base on both mobile and desktop browsers
-  const isBaseApp = typeof window !== 'undefined' && isBaseMiniApp();
-  const isMobile = isBaseApp || (typeof window !== 'undefined' && window.innerWidth <= 768);
+  // This is a Base/Farcaster miniapp - always use mobile/miniapp layout
+  const isMobile = true;
   
   // Detect dark mode
   const isDarkMode = typeof document !== 'undefined' && 
@@ -98,34 +83,21 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
      document.documentElement.classList.contains('lawb-app-dark-mode'));
   
   // Recalculate positions for visible desktop icons, top-left oriented
+  // Always use 2-column grid for miniapp
   const getPositions = () => {
     const positions: Record<string, { x: number; y: number }> = {};
     const spacing = getIconSpacing();
     
-    if (isMobile) {
-      // Mobile: Use 2-column grid that fits screen
-      let index = 0;
-      desktopIcons.forEach(icon => {
-        const col = index % 2;
-        const row = Math.floor(index / 2);
-        positions[icon.id] = {
-          x: spacing.startLeft + col * (ICON_WIDTH + spacing.hGap),
-          y: spacing.startTop + row * (ICON_HEIGHT + spacing.vGap),
-        };
-        index++;
-      });
-    } else {
-      // Desktop: Original column-based layout
-      let row = 0, col = 0;
-      desktopIcons.forEach(icon => {
-        positions[icon.id] = {
-          x: spacing.startLeft + col * (ICON_WIDTH + spacing.hGap),
-          y: spacing.startTop + row * (ICON_HEIGHT + spacing.vGap),
-        };
-        row++;
-        if (row >= 4) { row = 0; col++; }
-      });
-    }
+    let index = 0;
+    desktopIcons.forEach(icon => {
+      const col = index % 2;
+      const row = Math.floor(index / 2);
+      positions[icon.id] = {
+        x: spacing.startLeft + col * (ICON_WIDTH + spacing.hGap),
+        y: spacing.startTop + row * (ICON_HEIGHT + spacing.vGap),
+      };
+      index++;
+    });
     return positions;
   };
   const [positions, setPositions] = useState(getPositions());
@@ -159,12 +131,12 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
         width: '100%',
         maxWidth: '100vw',
         height: 'calc(100vh - 50px)',
-        paddingTop: isMobile ? '60px' : '10px', // Extra top padding for Base MiniApp
-        paddingLeft: isMobile ? '12px' : '10px',
-        paddingRight: isMobile ? '12px' : '10px',
-        paddingBottom: isMobile ? '60px' : '10px', // Extra bottom padding for navbar
+        paddingTop: '60px', // Top padding for Base MiniApp
+        paddingLeft: '12px',
+        paddingRight: '12px',
+        paddingBottom: '60px', // Bottom padding for navbar
         zIndex: 10,
-        overflow: isMobile ? 'auto' : 'visible',
+        overflow: 'auto',
         boxSizing: 'border-box'
       }}>
         {desktopIcons.map(icon => (
@@ -191,9 +163,9 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
           >
             <div style={{
               display: 'grid',
-              gridTemplateColumns: isBaseMiniApp() ? 'repeat(auto-fill, minmax(80px, 1fr))' : 'repeat(auto-fill, minmax(96px, 1fr))',
-              gap: isBaseMiniApp() ? '16px' : '24px',
-              padding: isBaseMiniApp() ? '16px' : '32px',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
+              gap: '16px',
+              padding: '16px',
               justifyItems: 'center',
               alignItems: 'center',
               minHeight: '100%',
@@ -227,9 +199,9 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
           >
             <div style={{
               display: 'grid',
-              gridTemplateColumns: isBaseMiniApp() ? 'repeat(auto-fill, minmax(80px, 1fr))' : 'repeat(auto-fill, minmax(96px, 1fr))',
-              gap: isBaseMiniApp() ? '16px' : '24px',
-              padding: isBaseMiniApp() ? '16px' : '32px',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
+              gap: '16px',
+              padding: '16px',
               justifyItems: 'center',
               alignItems: 'center',
               minHeight: '100%',

@@ -13,7 +13,6 @@ import { firebaseChess } from '../firebaseChess';
 import { firebaseProfiles } from '../firebaseProfiles';
 import { database } from '../firebaseApp';
 import { ref, push, onValue, off, query, orderByChild, limitToLast } from 'firebase/database';
-import { isBaseMiniApp } from '../utils/baseMiniapp';
 import './ChessMultiplayer.css';
 import { BrowserProvider, Contract } from 'ethers';
 import { TokenSelector } from './TokenSelector';
@@ -128,11 +127,10 @@ async function getPlayerInviteCodeFromContract(address: string, contractAddress:
   }
 }
 
-export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, isMobile = false }) => {
-  // Detect Base Mini App for proper formatting
-  const isBaseApp = typeof window !== 'undefined' && isBaseMiniApp();
-  // Use Base Mini App detection or passed isMobile prop
-  const effectiveIsMobile = isBaseApp || isMobile;
+export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, isMobile = true }) => {
+  // This is a Base/Farcaster miniapp - always use mobile formatting
+  const effectiveIsMobile = true;
+  const isBaseApp = true;
 
   const { address, isConnected, chainId } = useAccount();
   const { switchChain } = useSwitchChain();
