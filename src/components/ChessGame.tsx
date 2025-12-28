@@ -2919,7 +2919,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
 
   // Single player game UI
   return (
-    <div className={`chess-game${fullscreen ? ' fullscreen' : ''}${showGame ? ' game-active' : ''}${effectiveIsMobile ? ' mobile' : ' desktop'}${isBaseApp ? ' baseapp' : ''}`}>
+    <div className={`chess-game${fullscreen ? ' fullscreen' : ''}${showGame ? ' game-active' : ''}`}>
       {/* Linux-style Header - always show */}
       <ChessHeader
         onClose={onClose}
