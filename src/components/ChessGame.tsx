@@ -1833,7 +1833,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
   const renderDifficultySelection = () => (
     <div className="difficulty-selection-row" style={{ justifyContent: 'center' }}>
       <div className="difficulty-controls-col">
-        <div className="difficulty-selection-panel" style={{background:'transparent',borderRadius:0,padding: effectiveIsMobile ? '8px 12px' : '32px 24px',paddingTop: effectiveIsMobile ? '4px' : undefined,marginTop: effectiveIsMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
+        <div className="difficulty-selection-panel" style={{background:'transparent',borderRadius:0,boxShadow:'none',textAlign:'center'}}>
           <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '4px' : 8,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Difficulty</h2>
           <p style={{fontSize: effectiveIsMobile ? '0.9rem' : '1.1rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '12px' : 16,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Compete against the computer to climb the leaderboard.</p>
           <div style={{display:'flex',justifyContent:'center',gap: effectiveIsMobile ? '12px' : '16px',marginBottom: effectiveIsMobile ? '8px' : '16px', flexWrap: 'wrap', width: '100%'}}>
