@@ -82,7 +82,7 @@ interface ChessMultiplayerProps {
   onGameStart?: (inviteCode?: string) => void;
   onChatToggle?: () => void;
   isChatMinimized?: boolean;
-  effectiveIsMobile?: boolean;
+  isMobile?: boolean;
 }
 
 // Piece gallery data - will be updated dynamically based on selected piece set
@@ -128,11 +128,11 @@ async function getPlayerInviteCodeFromContract(address: string, contractAddress:
   }
 }
 
-export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, effectiveIsMobile = false }) => {
+export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, isMobile = false }) => {
   // Detect Base Mini App for proper formatting
   const isBaseApp = typeof window !== 'undefined' && isBaseMiniApp();
-  // Use Base Mini App detection or passed effectiveIsMobile prop
-  const effectiveIsMobile = isBaseApp || effectiveIsMobile;
+  // Use Base Mini App detection or passed isMobile prop
+  const effectiveIsMobile = isBaseApp || isMobile;
 
   const { address, isConnected, chainId } = useAccount();
   const { switchChain } = useSwitchChain();
@@ -1096,7 +1096,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
 
   // Mobile capabilities detection
   const mobileCapabilities = useMobileCapabilities();
-  const { effectiveIsMobile: effectiveIsMobileDevice, isLandscape, isTouchDevice, hasHapticFeedback, screenWidth, screenHeight } = mobileCapabilities;
+  const { isMobile: isMobileDevice, isLandscape, isTouchDevice, hasHapticFeedback, screenWidth, screenHeight } = mobileCapabilities;
 
   const handleTimeout = async () => {
     if (!inviteCode || !playerColor) return;
@@ -5991,7 +5991,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
             setIsMenuOpen(prev => !prev);
           }
         }}
-        effectiveIsMobile={effectiveIsMobile}
+        isMobile={effectiveIsMobile}
       />
       
       {/* Main Layout */}
@@ -6356,7 +6356,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
                   ← Back to Leaderboard
                 </button>
               )}
-              <PlayerProfile effectiveIsMobile={true} address={viewingProfileAddress || undefined} />
+              <PlayerProfile isMobile={true} address={viewingProfileAddress || undefined} />
             </div>
           )}
 
@@ -7237,7 +7237,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
           initialSize={{ width: 400, height: 500 }}
           zIndex={1000}
         >
-          <PlayerProfile effectiveIsMobile={false} />
+          <PlayerProfile isMobile={false} />
         </Popup>
       )}
 
@@ -7276,7 +7276,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
             }
             return null;
           })()}
-          <PlayerProfile effectiveIsMobile={false} address={viewingProfileAddress} />
+          <PlayerProfile isMobile={false} address={viewingProfileAddress} />
         </Popup>
       )}
       

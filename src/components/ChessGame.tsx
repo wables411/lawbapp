@@ -56,7 +56,7 @@ interface ChessGameProps {
   onGameStart?: (inviteCode?: string) => void;
   onChatToggle?: () => void;
   isChatMinimized?: boolean;
-  effectiveIsMobile?: boolean;
+  isMobile?: boolean;
 }
 
 // Piece gallery data - will be updated dynamically based on selected piece set
@@ -255,11 +255,11 @@ const useLichessAPI = () => {
   return { openingData, isAnalyzing, getOpeningData, getMoveAnalysis };
 };
 
-export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, effectiveIsMobile = false }) => {
+export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, isMobile = false }) => {
   // Detect Base Mini App for proper formatting
   const isBaseApp = typeof window !== 'undefined' && isBaseMiniApp();
-  // Use Base Mini App detection or passed effectiveIsMobile prop
-  const effectiveIsMobile = isBaseApp || effectiveIsMobile;
+  // Use Base Mini App detection or passed isMobile prop
+  const effectiveIsMobile = isBaseApp || isMobile;
   
   const { address: walletAddress, isConnected } = useAccount();
   const chainId = useChainId();
@@ -2249,7 +2249,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               setIsMenuOpen(prev => !prev);
             }
           }}
-          effectiveIsMobile={effectiveIsMobile}
+          isMobile={effectiveIsMobile}
         />
         <div className={`game-stable-layout home-view ${effectiveIsMobile ? 'mobile' : 'desktop'}`}>
           {/* Desktop sidebar removed - using menu popup and windows instead */}
@@ -2550,7 +2550,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               
               {sidebarView === 'profile' && (
                 <div className="profile-compact mobile-content-view">
-                  <PlayerProfile effectiveIsMobile={true} />
+                  <PlayerProfile isMobile={true} />
                 </div>
               )}
 
@@ -2845,7 +2845,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
           initialSize={{ width: 400, height: 500 }}
           zIndex={1000}
         >
-          <PlayerProfile effectiveIsMobile={false} />
+          <PlayerProfile isMobile={false} />
         </Popup>
         )}
         
@@ -2885,7 +2885,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               }
               return null;
             })()}
-            <PlayerProfile effectiveIsMobile={false} address={viewingProfileAddress} />
+            <PlayerProfile isMobile={false} address={viewingProfileAddress} />
           </Popup>
         )}
       </div>
@@ -2905,7 +2905,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
             setIsMenuOpen(prev => !prev);
           }
         }}
-        effectiveIsMobile={effectiveIsMobile}
+        isMobile={effectiveIsMobile}
       />
       <div className={`game-stable-layout ${effectiveIsMobile ? 'mobile-layout' : 'desktop-layout'}`} style={{ paddingTop: '50px', paddingBottom: isBaseApp ? '50px' : '0' }}>
         {/* Mobile Sidebar Popup - Always available on mobile via menu button */}
@@ -3185,7 +3185,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               
               {sidebarView === 'profile' && (
                 <div className="profile-compact mobile-content-view">
-                  <PlayerProfile effectiveIsMobile={true} />
+                  <PlayerProfile isMobile={true} />
                 </div>
               )}
 
@@ -3198,7 +3198,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               {viewingProfileAddress && (
                 <div className="profile-compact mobile-content-view" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 10000, background: '#fff' }}>
                   <button onClick={() => setViewingProfileAddress(null)} style={{ margin: '10px', padding: '5px 10px' }}>Close</button>
-                  <PlayerProfile effectiveIsMobile={true} address={viewingProfileAddress} />
+                  <PlayerProfile isMobile={true} address={viewingProfileAddress} />
                 </div>
               )}
             </div>
@@ -3656,7 +3656,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
           initialSize={{ width: 400, height: 500 }}
           zIndex={1000}
         >
-          <PlayerProfile effectiveIsMobile={false} />
+          <PlayerProfile isMobile={false} />
         </Popup>
       )}
 
@@ -3707,7 +3707,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
             }
             return null;
           })()}
-          <PlayerProfile effectiveIsMobile={false} address={viewingProfileAddress} />
+          <PlayerProfile isMobile={false} address={viewingProfileAddress} />
         </Popup>
       )}
     </div>
