@@ -3579,9 +3579,9 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
   /* REMOVED DUPLICATE - This rule is already defined above with align-self: center */
   
   /* Base Mini App (baseapp class) - Account for fixed Linux-style header (50px) */
-  .chess-game.baseapp .game-stable-layout,
+  /* Only add padding-top when showing game, not selection screens */
   .chess-game.baseapp .game-stable-layout.home-view {
-    padding-top: 50px !important; /* Fixed header height */
+    padding-top: 0px !important; /* Selection screens start immediately after header */
     padding: 0px !important;
     margin-top: 0px !important;
   }
@@ -3598,8 +3598,14 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     padding-top: 0px !important;
   }
   
-  .chess-game.baseapp .game-stable-layout {
-    padding-top: 50px !important; /* Fixed header height */
+  /* Only add padding-top when game is active, not on selection screens */
+  .chess-game.baseapp.game-active .game-stable-layout {
+    padding-top: 50px !important; /* Fixed header height - only when game is active */
+  }
+  
+  /* Selection screens - no padding */
+  .chess-game.baseapp .game-stable-layout:not(.game-active) {
+    padding-top: 0px !important;
   }
   
   .mode-selection-compact {
