@@ -3388,15 +3388,18 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
      CHESS SELECTION PAGES - MINIAPP CSS
      ============================================ */
   
-  /* Game stable layout - NO padding for selection screens, content starts at top */
-  .game-stable-layout:has(.piece-set-selection-row),
-  .game-stable-layout:has(.difficulty-selection-row) {
+  /* Game stable layout when showing selection screens - NO padding, content starts at top */
+  .game-stable-layout {
     padding-top: 0;
     margin-top: 0;
     position: relative;
+  }
+  
+  /* Selection rows take full viewport minus header and navbar */
+  .piece-set-selection-row,
+  .difficulty-selection-row {
+    position: relative;
     top: 0;
-    height: calc(100vh - 50px); /* Full height minus fixed header */
-    overflow-y: auto;
   }
   
   /* Container rows - start immediately after fixed header (50px) */
