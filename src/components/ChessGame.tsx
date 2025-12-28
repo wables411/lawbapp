@@ -2932,7 +2932,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         }}
         isMobile={effectiveIsMobile}
       />
-      <div className={`game-stable-layout ${effectiveIsMobile ? 'mobile-layout' : 'desktop-layout'}`} style={{ paddingTop: isBaseApp ? '0px' : '50px', paddingBottom: isBaseApp ? '50px' : '0' }}>
+      <div className="game-stable-layout" style={{ paddingTop: '0', paddingBottom: '50px' }}>
         {/* Mobile Sidebar Popup - Always available on mobile via menu button */}
         {effectiveIsMobile && (
           <>

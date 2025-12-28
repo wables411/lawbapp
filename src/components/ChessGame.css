@@ -3403,7 +3403,18 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
      CHESS SELECTION PAGES - MINIAPP CSS
      ============================================ */
   
-  /* Container rows - start immediately after fixed header */
+  /* Game stable layout - NO padding for selection screens, content starts at top */
+  .game-stable-layout:has(.piece-set-selection-row),
+  .game-stable-layout:has(.difficulty-selection-row) {
+    padding-top: 0;
+    margin-top: 0;
+    position: relative;
+    top: 0;
+    height: calc(100vh - 50px); /* Full height minus fixed header */
+    overflow-y: auto;
+  }
+  
+  /* Container rows - start immediately after fixed header (50px) */
   .piece-set-selection-row,
   .difficulty-selection-row {
     display: flex;
@@ -3411,6 +3422,8 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     width: 100%;
     margin: 0;
     padding: 0;
+    min-height: calc(100vh - 50px); /* Full viewport minus header */
+    box-sizing: border-box;
   }
   
   /* Control columns */
@@ -3421,23 +3434,24 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     padding: 0;
   }
   
-  /* Selection panels - compact layout for miniapp */
+  /* Selection panels - positioned at top, compact layout */
   .piece-set-selection-panel,
   .difficulty-selection-panel {
     width: 100%;
     margin: 0;
-    padding: 4px 16px 60px 16px;
+    padding: 8px 16px 60px 16px; /* 60px bottom for navbar */
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
     box-sizing: border-box;
+    min-height: calc(100vh - 50px - 60px); /* Viewport minus header and navbar */
   }
   
   /* Headers - minimal spacing */
   .piece-set-selection-panel h2,
   .difficulty-selection-panel h2 {
-    margin: 0 0 2px 0;
+    margin: 0 0 4px 0;
     padding: 0;
     color: #ff0000;
     text-shadow: 0 0 6px #ff0000, 0 0 2px #ff0000;
@@ -3449,38 +3463,43 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
   /* Paragraphs - minimal spacing */
   .piece-set-selection-panel p,
   .difficulty-selection-panel p {
-    margin: 0 0 6px 0;
+    margin: 0 0 8px 0;
     padding: 0;
     color: #ff0000;
     text-shadow: 0 0 6px #ff0000, 0 0 2px #ff0000;
     font-size: 0.9rem;
   }
   
-  /* All div containers in panels - stack vertically with spacing */
-  .piece-set-selection-panel > div,
-  .difficulty-selection-panel > div {
+  /* Dropdown container wrapper */
+  .piece-set-selection-panel > div:first-of-type {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 0 12px 0;
+    padding: 0;
+  }
+  
+  /* All other div containers - stack vertically, one button per container */
+  .piece-set-selection-panel > div:not(:first-of-type),
+  .difficulty-selection-panel > div:not(:first-of-type) {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin: 4px 0;
+    margin: 8px 0;
     padding: 0;
     gap: 0;
   }
   
-  /* Dropdown container - full width */
-  .piece-set-selection-panel > div:first-of-type {
-    max-width: 300px;
-    margin: 0 0 8px 0;
-  }
-  
   /* Difficulty buttons container - horizontal layout for Easy/Hard */
   .difficulty-selection-panel > div:first-of-type {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
-    margin: 0 0 8px 0;
+    width: 100%;
+    margin: 0 0 12px 0;
+    padding: 0;
   }
   
   /* Buttons - prevent overlap, proper spacing */
@@ -3491,13 +3510,6 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  
-  /* Button containers should only contain one button each */
-  .piece-set-selection-panel > div > button:only-child,
-  .difficulty-selection-panel > div > button:only-child {
-    width: auto;
-    min-width: 200px;
   }
   
   /* Theme color overrides - ensure red text in both themes */
