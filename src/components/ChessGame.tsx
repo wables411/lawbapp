@@ -1713,11 +1713,11 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
       <div className="piece-set-selection-row" style={{ justifyContent: 'center' }}>
         <div className="piece-set-controls-col">
           <div className="piece-set-selection-panel" style={{background:'transparent',borderRadius:0,boxShadow:'none',textAlign:'center'}}>
-            <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '2px' : 4,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Chess Set</h2>
-            <p style={{fontSize: effectiveIsMobile ? '0.9rem' : '1.1rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '4px' : 8,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Choose your preferred chess set.</p>
+            <h2>Select Chess Set</h2>
+            <p>Choose your preferred chess set.</p>
             
             {/* Piece Set Dropdown */}
-            <div style={{display:'flex',justifyContent:'center',marginBottom: effectiveIsMobile ? '4px' : '8px', width: '100%'}}>
+            <div>
               <div style={{ position: 'relative', minWidth: '200px', width: '100%', maxWidth: '300px' }}>
                 <button
                   type="button"
@@ -1773,16 +1773,16 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               </div>
             </div>
 
-            <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '2px' : '4px', marginBottom: '2px'}}>
+            <div>
               <button 
-                className={`piece-set-btn start-btn`}
+                className="piece-set-btn start-btn"
                 onClick={() => { setShowPieceSetSelector(false); setShowDifficulty(true); }}
                 style={{ 
                   background: 'transparent',
                   color: '#ff0000',
                   fontWeight: 'bold',
-                  fontSize: effectiveIsMobile ? '1em' : '1.2em',
-                  padding: effectiveIsMobile ? '12px 24px' : '16px 40px',
+                  fontSize: '1em',
+                  padding: '12px 24px',
                   borderRadius: 0,
                   boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
                   border: '1px solid #ff0000',
@@ -1791,9 +1791,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                   whiteSpace: 'nowrap',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  width: 'auto',
-                  maxWidth: '100%'
+                  gap: '8px'
                 }}
               >
                 <span role="img" aria-label="chess">♟️🦞</span>
@@ -1802,22 +1800,20 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
             </div>
 
             {/* Back to Chess Button */}
-            <div style={{marginTop: '4px', display: 'flex', justifyContent: 'center', width: 'auto', maxWidth: '100%'}}>
+            <div>
               <button
                 onClick={() => navigateTo('/chess')}
                 style={{ 
                   background: 'transparent',
                   color: '#ff0000',
                   fontWeight: 'bold',
-                  fontSize: '1.1em',
+                  fontSize: '1em',
                   padding: '12px 24px',
                   borderRadius: 0,
                   boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
                   border: '1px solid #ff0000',
                   cursor: 'pointer',
                   letterSpacing: 1,
-                  width: 'auto',
-                  maxWidth: 'none',
                   whiteSpace: 'nowrap'
                 }}
               >
@@ -1843,8 +1839,8 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                 background: difficulty==='easy'?'#ff0000':'transparent',
                 color: difficulty==='easy'?'#fff':'#ff0000',
                 fontWeight:'bold',
-                fontSize: effectiveIsMobile ? '1em' : '1.1em',
-                padding: effectiveIsMobile ? '10px 24px' : '12px 32px',
+                fontSize: '1em',
+                padding: '10px 24px',
                 borderRadius:0,
                 border:'1px solid #ff0000',
                 cursor:'pointer',
@@ -1861,8 +1857,8 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                 background:difficulty==='hard'?'#ff0000':'transparent',
                 color:difficulty==='hard'?'#fff':'#ff0000',
                 fontWeight:'bold',
-                fontSize: effectiveIsMobile ? '1em' : '1.1em',
-                padding: effectiveIsMobile ? '10px 24px' : '12px 32px',
+                fontSize: '1em',
+                padding: '10px 24px',
                 borderRadius:0,
                 border:'1px solid #ff0000',
                 cursor:'pointer',
@@ -1874,16 +1870,16 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               onClick={()=>setDifficulty('hard')}
             >Hard</button>
           </div>
-          <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '2px' : '4px', marginBottom: '2px'}}>
+          <div>
             <button 
-              className={`difficulty-btn start-btn`}
+              className="difficulty-btn start-btn"
               onClick={() => { startGame(); }}
               style={{ 
                 background: 'transparent',
                 color: '#ff0000',
                 fontWeight: 'bold',
-                fontSize: effectiveIsMobile ? '1em' : '1.2em',
-                padding: effectiveIsMobile ? '12px 24px' : '16px 40px',
+                fontSize: '1em',
+                padding: '12px 24px',
                 borderRadius: 0,
                 boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
                 border: '1px solid #ff0000',
@@ -1892,9 +1888,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                 whiteSpace: 'nowrap',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
-                width: 'auto',
-                maxWidth: '100%'
+                gap: '8px'
               }}
             >
               <span role="img" aria-label="chess">♟️</span>

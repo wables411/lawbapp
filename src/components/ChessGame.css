@@ -3400,10 +3400,10 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
   }
   
   /* ============================================
-     CHESS SELECTION PAGES - CLEAN CSS
+     CHESS SELECTION PAGES - MINIAPP CSS
      ============================================ */
   
-  /* Container rows - no padding, start immediately after header */
+  /* Container rows - start immediately after fixed header */
   .piece-set-selection-row,
   .difficulty-selection-row {
     display: flex;
@@ -3421,62 +3421,83 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     padding: 0;
   }
   
-  /* Selection panels - minimal padding, compact layout */
+  /* Selection panels - compact layout for miniapp */
   .piece-set-selection-panel,
   .difficulty-selection-panel {
     width: 100%;
     margin: 0;
-    padding: 8px 16px 60px 16px; /* Bottom padding for navbar */
+    padding: 4px 16px 60px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     box-sizing: border-box;
   }
   
   /* Headers - minimal spacing */
   .piece-set-selection-panel h2,
   .difficulty-selection-panel h2 {
-    margin: 0 0 4px 0;
+    margin: 0 0 2px 0;
     padding: 0;
     color: #ff0000;
     text-shadow: 0 0 6px #ff0000, 0 0 2px #ff0000;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
   }
   
   /* Paragraphs - minimal spacing */
   .piece-set-selection-panel p,
   .difficulty-selection-panel p {
-    margin: 0 0 8px 0;
+    margin: 0 0 6px 0;
     padding: 0;
     color: #ff0000;
     text-shadow: 0 0 6px #ff0000, 0 0 2px #ff0000;
+    font-size: 0.9rem;
   }
   
-  /* Button containers - stack vertically, centered */
+  /* All div containers in panels - stack vertically with spacing */
   .piece-set-selection-panel > div,
   .difficulty-selection-panel > div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    margin: 4px 0;
     width: 100%;
-    max-width: 100%;
+    margin: 4px 0;
+    padding: 0;
+    gap: 0;
   }
   
-  /* Difficulty buttons container - horizontal layout */
+  /* Dropdown container - full width */
+  .piece-set-selection-panel > div:first-of-type {
+    max-width: 300px;
+    margin: 0 0 8px 0;
+  }
+  
+  /* Difficulty buttons container - horizontal layout for Easy/Hard */
   .difficulty-selection-panel > div:first-of-type {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
+    margin: 0 0 8px 0;
   }
   
-  /* Buttons - no extra margins, preserve inline styles */
+  /* Buttons - prevent overlap, proper spacing */
   .piece-set-selection-panel button,
   .difficulty-selection-panel button {
     margin: 0;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Button containers should only contain one button each */
+  .piece-set-selection-panel > div > button:only-child,
+  .difficulty-selection-panel > div > button:only-child {
+    width: auto;
+    min-width: 200px;
   }
   
   /* Theme color overrides - ensure red text in both themes */
