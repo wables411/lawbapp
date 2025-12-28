@@ -96,6 +96,9 @@ const Desktop: React.FC<DesktopProps> = ({ onIconClick }) => {
     (document.body.classList.contains('lawb-app-dark-mode') || 
      document.documentElement.classList.contains('lawb-app-dark-mode'));
   
+  // Calculate spacing based on viewport to fit all icons
+  const spacing = getIconSpacing(desktopIcons.length);
+  
   // Recalculate positions for visible desktop icons, top-left oriented
   // Always use 2-column grid for miniapp
   const getPositions = () => {
