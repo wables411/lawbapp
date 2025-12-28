@@ -19,31 +19,31 @@ const useStyles = createUseStyles({
     top: 0,
     left: 0,
     '@media (max-width: 768px)': {
-      width: 'calc(100vw - 16px) !important',
-      height: 'calc(100vh - 16px) !important',
-      maxWidth: 'calc(100vw - 16px) !important',
-      maxHeight: 'calc(100vh - 16px) !important',
+      width: 'calc(100vw - 48px) !important',
+      height: 'calc(100vh - 48px) !important',
+      maxWidth: 'calc(100vw - 48px) !important',
+      maxHeight: 'calc(100vh - 48px) !important',
       minWidth: '0 !important',
       minHeight: '0 !important',
-      left: '8px !important',
-      top: '8px !important',
-      right: '8px !important',
-      bottom: '8px !important',
+      left: '24px !important',
+      top: '24px !important',
+      right: '24px !important',
+      bottom: '24px !important',
       resize: 'none !important',
       boxSizing: 'border-box !important',
     },
     // Base Mini App should always use mobile styles regardless of window width
     '.base-miniapp &': {
-      width: 'calc(100vw - 16px) !important',
-      height: 'calc(100vh - 16px) !important',
-      maxWidth: 'calc(100vw - 16px) !important',
-      maxHeight: 'calc(100vh - 16px) !important',
+      width: 'calc(100vw - 48px) !important',
+      height: 'calc(100vh - 48px) !important',
+      maxWidth: 'calc(100vw - 48px) !important',
+      maxHeight: 'calc(100vh - 48px) !important',
       minWidth: '0 !important',
       minHeight: '0 !important',
-      left: '8px !important',
-      top: '8px !important',
-      right: '8px !important',
-      bottom: '8px !important',
+      left: '24px !important',
+      top: '24px !important',
+      right: '24px !important',
+      bottom: '24px !important',
       resize: 'none !important',
       boxSizing: 'border-box !important',
     }
@@ -459,17 +459,17 @@ function Popup({ id, isOpen, onClose, onMinimize, children, title, initialPositi
     const leftInset = safeAreaInsets.left || 0;
     const rightInset = safeAreaInsets.right || 0;
     const navbarHeight = 50;
-    const padding = 8; // 8px padding on all sides
+    const padding = 24; // Significant padding (24px) on all sides for better spacing
     
     // Base App has a header bar at the top (typically ~44-50px) that's not in safe area insets
     // Account for this header in addition to safe area insets
     const baseAppHeaderHeight = 50; // Base App header height
     
-    // Total top space = safe area top + Base App header + padding
+    // Total top space = safe area top + Base App header + significant padding
     const totalTopSpace = topInset + baseAppHeaderHeight + padding;
-    // Total bottom space = safe area bottom + taskbar + padding
+    // Total bottom space = safe area bottom + taskbar + significant padding
     const totalBottomSpace = bottomInset + navbarHeight + padding;
-    // Total left/right space = safe area + padding
+    // Total left/right space = safe area + significant padding
     const totalLeftSpace = leftInset + padding;
     const totalRightSpace = rightInset + padding;
     
@@ -536,14 +536,14 @@ function Popup({ id, isOpen, onClose, onMinimize, children, title, initialPositi
           width: initialSize?.width,
           height: initialSize?.height,
           zIndex: zIndex || 100,
-          // For mobile viewports, use full-screen layout similar to Base Mini App
+          // For mobile viewports, use layout with significant padding similar to Base Mini App
           ...(isMobileViewport && {
             position: 'fixed',
-            inset: '8px',
-            width: 'calc(100vw - 16px)',
-            height: 'calc(100vh - 16px)',
-            maxWidth: 'calc(100vw - 16px)',
-            maxHeight: 'calc(100vh - 16px)',
+            inset: '24px',
+            width: 'calc(100vw - 48px)',
+            height: 'calc(100vh - 48px)',
+            maxWidth: 'calc(100vw - 48px)',
+            maxHeight: 'calc(100vh - 48px)',
             minWidth: '0',
             minHeight: '0',
             resize: 'none',

@@ -18,6 +18,7 @@ import { PlayerProfile } from './PlayerProfile';
 import { HowToContent } from './HowToContent';
 import { ThemeToggle } from './ThemeToggle';
 import ChessHeader from './ChessHeader';
+import { isBaseMiniApp } from '../utils/baseMiniapp';
 
 import './ChessGame.css';
 
@@ -55,7 +56,7 @@ interface ChessGameProps {
   onGameStart?: (inviteCode?: string) => void;
   onChatToggle?: () => void;
   isChatMinimized?: boolean;
-  isMobile?: boolean;
+  effectiveIsMobile?: boolean;
 }
 
 // Piece gallery data - will be updated dynamically based on selected piece set
@@ -254,7 +255,12 @@ const useLichessAPI = () => {
   return { openingData, isAnalyzing, getOpeningData, getMoveAnalysis };
 };
 
-export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, isMobile = false }) => {
+export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, effectiveIsMobile = false }) => {
+  // Detect Base Mini App for proper formatting
+  const isBaseApp = typeof window !== 'undefined' && isBaseMiniApp();
+  // Use Base Mini App detection or passed effectiveIsMobile prop
+  const effectiveIsMobile = isBaseApp || effectiveIsMobile;
+  
   const { address: walletAddress, isConnected } = useAccount();
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
@@ -263,7 +269,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
   // Mobile wallet connection handler
   const handleMobileWalletConnection = async () => {
     try {
-      if (isMobile) {
+      if (effectiveIsMobile) {
         await open({ view: 'Connect' });
       } else {
         await open({ view: 'Connect' });
@@ -1675,12 +1681,12 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
     return (
       <div className="piece-set-selection-row" style={{ justifyContent: 'center' }}>
         <div className="piece-set-controls-col">
-          <div className="piece-set-selection-panel" style={{background:'transparent',borderRadius:0,padding: isMobile ? '8px 12px' : '32px 24px',paddingTop: isMobile ? '4px' : undefined,marginTop: isMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
-            <h2 style={{fontWeight:700,letterSpacing:1,fontSize: isMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: isMobile ? '8px' : 16,marginTop: isMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Chess Set</h2>
+          <div className="piece-set-selection-panel" style={{background:'transparent',borderRadius:0,padding: effectiveIsMobile ? '8px 12px' : '32px 24px',paddingTop: effectiveIsMobile ? '4px' : undefined,marginTop: effectiveIsMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
+            <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '8px' : 16,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Chess Set</h2>
             <p style={{fontSize:'1.1rem',color:'#ff0000',marginBottom:24,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Choose your preferred chess set.</p>
             
             {/* Piece Set Dropdown */}
-            <div style={{display:'flex',justifyContent:'center',marginBottom: isMobile ? '16px' : '24px', width: '100%'}}>
+            <div style={{display:'flex',justifyContent:'center',marginBottom: effectiveIsMobile ? '16px' : '24px', width: '100%'}}>
               <div style={{ position: 'relative', minWidth: '200px', width: '100%', maxWidth: '300px' }}>
                 <button
                   type="button"
@@ -1736,7 +1742,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               </div>
             </div>
 
-            <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: isMobile ? '8px' : '16px', marginBottom: '8px'}}>
+            <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '8px' : '16px', marginBottom: '8px'}}>
               <button 
                 className={`piece-set-btn start-btn`}
                 onClick={() => { setShowPieceSetSelector(false); setShowDifficulty(true); }}
@@ -1744,8 +1750,8 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                   background: 'transparent',
                   color: '#ff0000',
                   fontWeight: 'bold',
-                  fontSize: isMobile ? '1.1em' : '1.3em',
-                  padding: isMobile ? '14px 32px' : '18px 48px',
+                  fontSize: effectiveIsMobile ? '1.1em' : '1.3em',
+                  padding: effectiveIsMobile ? '14px 32px' : '18px 48px',
                   borderRadius: 0,
                   boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
                   border: '1px solid #ff0000',
@@ -1796,18 +1802,18 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
   const renderDifficultySelection = () => (
     <div className="difficulty-selection-row" style={{ justifyContent: 'center' }}>
       <div className="difficulty-controls-col">
-        <div className="difficulty-selection-panel" style={{background:'transparent',borderRadius:0,padding: isMobile ? '8px 12px' : '32px 24px',paddingTop: isMobile ? '4px' : undefined,marginTop: isMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
-          <h2 style={{fontWeight:700,letterSpacing:1,fontSize: isMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: isMobile ? '8px' : 16,marginTop: isMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Difficulty</h2>
-          <p style={{fontSize: isMobile ? '1em' : '1.1rem',color:'#ff0000',marginBottom: isMobile ? '16px' : '24px',textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Compete against the computer to climb the leaderboard.</p>
-          <div style={{display:'flex',justifyContent:'center',gap: isMobile ? '12px' : '16px',marginBottom: isMobile ? '16px' : '24px', flexWrap: 'wrap', width: '100%'}}>
+        <div className="difficulty-selection-panel" style={{background:'transparent',borderRadius:0,padding: effectiveIsMobile ? '8px 12px' : '32px 24px',paddingTop: effectiveIsMobile ? '4px' : undefined,marginTop: effectiveIsMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
+          <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '8px' : 16,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Difficulty</h2>
+          <p style={{fontSize: effectiveIsMobile ? '1em' : '1.1rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '16px' : '24px',textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Compete against the computer to climb the leaderboard.</p>
+          <div style={{display:'flex',justifyContent:'center',gap: effectiveIsMobile ? '12px' : '16px',marginBottom: effectiveIsMobile ? '16px' : '24px', flexWrap: 'wrap', width: '100%'}}>
             <button
               className={`difficulty-btn${difficulty === 'easy' ? ' selected' : ''}`}
               style={{
                 background: difficulty==='easy'?'#ff0000':'transparent',
                 color: difficulty==='easy'?'#fff':'#ff0000',
                 fontWeight:'bold',
-                fontSize: isMobile ? '1em' : '1.1em',
-                padding: isMobile ? '10px 24px' : '12px 32px',
+                fontSize: effectiveIsMobile ? '1em' : '1.1em',
+                padding: effectiveIsMobile ? '10px 24px' : '12px 32px',
                 borderRadius:0,
                 border:'1px solid #ff0000',
                 cursor:'pointer',
@@ -1824,8 +1830,8 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                 background:difficulty==='hard'?'#ff0000':'transparent',
                 color:difficulty==='hard'?'#fff':'#ff0000',
                 fontWeight:'bold',
-                fontSize: isMobile ? '1em' : '1.1em',
-                padding: isMobile ? '10px 24px' : '12px 32px',
+                fontSize: effectiveIsMobile ? '1em' : '1.1em',
+                padding: effectiveIsMobile ? '10px 24px' : '12px 32px',
                 borderRadius:0,
                 border:'1px solid #ff0000',
                 cursor:'pointer',
@@ -1837,7 +1843,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               onClick={()=>setDifficulty('hard')}
             >Hard</button>
           </div>
-          <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: isMobile ? '8px' : '16px', marginBottom: '8px'}}>
+          <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '8px' : '16px', marginBottom: '8px'}}>
             <button 
               className={`difficulty-btn start-btn`}
               onClick={() => { startGame(); }}
@@ -1845,8 +1851,8 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                 background: 'transparent',
                 color: '#ff0000',
                 fontWeight: 'bold',
-                fontSize: isMobile ? '1.1em' : '1.3em',
-                padding: isMobile ? '14px 32px' : '18px 48px',
+                fontSize: effectiveIsMobile ? '1.1em' : '1.3em',
+                padding: effectiveIsMobile ? '14px 32px' : '18px 48px',
                 borderRadius: 0,
                 boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
                 border: '1px solid #ff0000',
@@ -2175,22 +2181,22 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
   };
 
   const openHowToGuide = useCallback(() => {
-    if (isMobile) {
+    if (effectiveIsMobile) {
       setSidebarView('howto');
       setIsSidebarOpen(false);
     } else {
       openWindow('howto');
     }
-  }, [isMobile, openWindow]);
+  }, [effectiveIsMobile, openWindow]);
   
   // Mobile sidebar state (unchanged)
-  const [sidebarView, setSidebarView] = useState<'leaderboard' | 'moves' | 'gallery' | 'chat' | 'profile' | 'howto' | null>(isMobile ? null : null);
+  const [sidebarView, setSidebarView] = useState<'leaderboard' | 'moves' | 'gallery' | 'chat' | 'profile' | 'howto' | null>(effectiveIsMobile ? null : null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Debug menu state
   useEffect(() => {
-    if (isMobile) {
-      console.log('[MENU] Menu state', { isSidebarOpen, sidebarView, isMobile });
+    if (effectiveIsMobile) {
+      console.log('[MENU] Menu state', { isSidebarOpen, sidebarView, effectiveIsMobile });
       if (isSidebarOpen) {
         console.log('[MENU RENDER] Menu is open, rendering buttons');
       }
@@ -2198,7 +2204,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         console.log('[POPUP] SidebarView is set, should render popup:', sidebarView);
       }
     }
-  }, [isMobile, isSidebarOpen, sidebarView]);
+  }, [effectiveIsMobile, isSidebarOpen, sidebarView]);
 
   // In the promotion dialog handler, after a pawn is promoted, play the upgrade sound
   const handlePromotion = (promotionPiece: string) => {
@@ -2237,15 +2243,15 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         <ChessHeader
           onClose={onClose}
           onMenuClick={() => {
-            if (isMobile) {
+            if (effectiveIsMobile) {
               setIsSidebarOpen(prev => !prev);
             } else {
               setIsMenuOpen(prev => !prev);
             }
           }}
-          isMobile={isMobile}
+          effectiveIsMobile={effectiveIsMobile}
         />
-        <div className={`game-stable-layout home-view ${isMobile ? 'mobile' : 'desktop'}`}>
+        <div className={`game-stable-layout home-view ${effectiveIsMobile ? 'mobile' : 'desktop'}`}>
           {/* Desktop sidebar removed - using menu popup and windows instead */}
           <div className="center-area">
             <div className="game-mode-panel-streamlined">
@@ -2274,7 +2280,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                     fontFamily: 'Courier New, monospace',
                     marginTop: '5px'
                   }}>
-                    {isMobile ? formatCountdown(timeoutCountdown) : `Time: ${formatCountdown(timeoutCountdown)}`}
+                    {effectiveIsMobile ? formatCountdown(timeoutCountdown) : `Time: ${formatCountdown(timeoutCountdown)}`}
                   </div>
                 )}
                 {/* Chain switching no longer required for single-player - any EVM chain works */}
@@ -2326,7 +2332,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         </div>
 
         {/* Mobile Sidebar Popup - Home View */}
-        {isMobile && (
+        {effectiveIsMobile && (
           <>
             {/* Mobile Popup Overlay */}
             {isSidebarOpen && (
@@ -2438,7 +2444,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         )}
 
         {/* Mobile Content Popup - Home View */}
-        {isMobile && sidebarView && (
+        {effectiveIsMobile && sidebarView && (
           <>
             {/* Overlay */}
             <div 
@@ -2544,7 +2550,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               
               {sidebarView === 'profile' && (
                 <div className="profile-compact mobile-content-view">
-                  <PlayerProfile isMobile={true} />
+                  <PlayerProfile effectiveIsMobile={true} />
                 </div>
               )}
 
@@ -2558,11 +2564,11 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         )}
 
         {/* Menu Popup - Home View (Desktop Only) */}
-        {!isMobile && (() => {
+        {!effectiveIsMobile && (() => {
           const shouldRender = isMenuOpen && !showGame;
           if (typeof window !== 'undefined' && window.console) {
             window.console.log('[MENU RENDER] Home view menu check:', JSON.stringify({
-              isMobile,
+              effectiveIsMobile,
               isMenuOpen,
               showGame,
               shouldRender
@@ -2614,14 +2620,14 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               style={{
                 display: 'block',
                 width: '100%',
-                padding: isMobile ? '12px 16px' : '8px',
+                padding: effectiveIsMobile ? '12px 16px' : '8px',
                 marginBottom: '4px',
                 background: '#c0c0c0',
                 border: '2px outset #fff',
                 cursor: 'pointer',
                 textAlign: 'left',
-                minHeight: isMobile ? '44px' : 'auto',
-                fontSize: isMobile ? '16px' : '14px',
+                minHeight: effectiveIsMobile ? '44px' : 'auto',
+                fontSize: effectiveIsMobile ? '16px' : '14px',
                 touchAction: 'manipulation'
               }}
             >
@@ -2635,14 +2641,14 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               style={{
                 display: 'block',
                 width: '100%',
-                padding: isMobile ? '12px 16px' : '8px',
+                padding: effectiveIsMobile ? '12px 16px' : '8px',
                 marginBottom: '4px',
                 background: '#c0c0c0',
                 border: '2px outset #fff',
                 cursor: 'pointer',
                 textAlign: 'left',
-                minHeight: isMobile ? '44px' : 'auto',
-                fontSize: isMobile ? '16px' : '14px',
+                minHeight: effectiveIsMobile ? '44px' : 'auto',
+                fontSize: effectiveIsMobile ? '16px' : '14px',
                 touchAction: 'manipulation'
               }}
             >
@@ -2656,14 +2662,14 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               style={{
                 display: 'block',
                 width: '100%',
-                padding: isMobile ? '12px 16px' : '8px',
+                padding: effectiveIsMobile ? '12px 16px' : '8px',
                 marginBottom: '4px',
                 background: '#c0c0c0',
                 border: '2px outset #fff',
                 cursor: 'pointer',
                 textAlign: 'left',
-                minHeight: isMobile ? '44px' : 'auto',
-                fontSize: isMobile ? '16px' : '14px',
+                minHeight: effectiveIsMobile ? '44px' : 'auto',
+                fontSize: effectiveIsMobile ? '16px' : '14px',
                 touchAction: 'manipulation'
               }}
             >
@@ -2679,14 +2685,14 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               style={{
                 display: 'block',
                 width: '100%',
-                padding: isMobile ? '12px 16px' : '8px',
+                padding: effectiveIsMobile ? '12px 16px' : '8px',
                 marginBottom: '4px',
                 background: '#c0c0c0',
                 border: '2px outset #fff',
                 cursor: 'pointer',
                 textAlign: 'left',
-                minHeight: isMobile ? '44px' : 'auto',
-                fontSize: isMobile ? '16px' : '14px',
+                minHeight: effectiveIsMobile ? '44px' : 'auto',
+                fontSize: effectiveIsMobile ? '16px' : '14px',
                 touchAction: 'manipulation'
               }}
             >
@@ -2705,14 +2711,14 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               style={{
                 display: 'block',
                 width: '100%',
-                padding: isMobile ? '12px 16px' : '8px',
+                padding: effectiveIsMobile ? '12px 16px' : '8px',
                 marginBottom: '4px',
                 background: '#c0c0c0',
                 border: '2px outset #fff',
                 cursor: 'pointer',
                 textAlign: 'left',
-                minHeight: isMobile ? '44px' : 'auto',
-                fontSize: isMobile ? '16px' : '14px',
+                minHeight: effectiveIsMobile ? '44px' : 'auto',
+                fontSize: effectiveIsMobile ? '16px' : '14px',
                 touchAction: 'manipulation'
               }}
             >
@@ -2753,7 +2759,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         )}
 
         {/* Desktop Windows - Home View */}
-        {!isMobile && openWindows.has('leaderboard') && (
+        {!effectiveIsMobile && openWindows.has('leaderboard') && (
         <Popup
           id="leaderboard-window"
           isOpen={true}
@@ -2813,7 +2819,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         </Popup>
         )}
 
-        {!isMobile && openWindows.has('gallery') && (
+        {!effectiveIsMobile && openWindows.has('gallery') && (
         <Popup
           id="gallery-window"
           isOpen={true}
@@ -2829,7 +2835,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         </Popup>
         )}
 
-        {!isMobile && openWindows.has('profile') && (
+        {!effectiveIsMobile && openWindows.has('profile') && (
         <Popup
           id="profile-window"
           isOpen={true}
@@ -2839,11 +2845,11 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
           initialSize={{ width: 400, height: 500 }}
           zIndex={1000}
         >
-          <PlayerProfile isMobile={false} />
+          <PlayerProfile effectiveIsMobile={false} />
         </Popup>
         )}
         
-        {!isMobile && openWindows.has('howto') && (
+        {!effectiveIsMobile && openWindows.has('howto') && (
         <Popup
           id="howto-window"
           isOpen={true}
@@ -2858,7 +2864,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         )}
         
         {/* Profile popup from leaderboard - rendered in home view */}
-        {!isMobile && viewingProfileAddress && (
+        {!effectiveIsMobile && viewingProfileAddress && (
           <Popup
             id="view-profile-window"
             isOpen={true}
@@ -2879,7 +2885,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               }
               return null;
             })()}
-            <PlayerProfile isMobile={false} address={viewingProfileAddress} />
+            <PlayerProfile effectiveIsMobile={false} address={viewingProfileAddress} />
           </Popup>
         )}
       </div>
@@ -2888,22 +2894,22 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
 
   // Single player game UI
   return (
-    <div className={`chess-game${fullscreen ? ' fullscreen' : ''}${showGame ? ' game-active' : ''}${isMobile ? ' mobile' : ' desktop'}`}>
+    <div className={`chess-game${fullscreen ? ' fullscreen' : ''}${showGame ? ' game-active' : ''}${effectiveIsMobile ? ' mobile' : ' desktop'}${isBaseApp ? ' baseapp' : ''}`}>
       {/* Linux-style Header - always show */}
       <ChessHeader
         onClose={onClose}
         onMenuClick={() => {
-          if (isMobile) {
+          if (effectiveIsMobile) {
             setIsSidebarOpen(prev => !prev);
           } else {
             setIsMenuOpen(prev => !prev);
           }
         }}
-        isMobile={isMobile}
+        effectiveIsMobile={effectiveIsMobile}
       />
-      <div className={`game-stable-layout ${isMobile ? 'mobile-layout' : 'desktop-layout'}`} style={{ paddingTop: '50px' }}>
+      <div className={`game-stable-layout ${effectiveIsMobile ? 'mobile-layout' : 'desktop-layout'}`} style={{ paddingTop: '50px', paddingBottom: isBaseApp ? '50px' : '0' }}>
         {/* Mobile Sidebar Popup - Always available on mobile via menu button */}
-        {isMobile && (
+        {effectiveIsMobile && (
           <>
             {/* Mobile Popup Overlay */}
             {isSidebarOpen && (
@@ -3033,7 +3039,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         )}
         
         {/* Mobile Content Popup - Shows content when a menu button is clicked */}
-        {isMobile && sidebarView && (
+        {effectiveIsMobile && sidebarView && (
           <>
             {/* Overlay */}
             <div 
@@ -3179,7 +3185,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               
               {sidebarView === 'profile' && (
                 <div className="profile-compact mobile-content-view">
-                  <PlayerProfile isMobile={true} />
+                  <PlayerProfile effectiveIsMobile={true} />
                 </div>
               )}
 
@@ -3192,7 +3198,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               {viewingProfileAddress && (
                 <div className="profile-compact mobile-content-view" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 10000, background: '#fff' }}>
                   <button onClick={() => setViewingProfileAddress(null)} style={{ margin: '10px', padding: '5px 10px' }}>Close</button>
-                  <PlayerProfile isMobile={true} address={viewingProfileAddress} />
+                  <PlayerProfile effectiveIsMobile={true} address={viewingProfileAddress} />
                 </div>
               )}
             </div>
@@ -3210,7 +3216,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               </span>
               {gameMode === GameMode.AI && gameState === 'active' && timeoutCountdown > 0 && (
                 <span className={`timer-display ${timeoutCountdown < 300 ? 'timer-warning' : ''} ${timeoutCountdown < 60 ? 'timer-critical' : ''}`}>
-                  {isMobile ? formatCountdown(timeoutCountdown) : `Time: ${formatCountdown(timeoutCountdown)}`}
+                  {effectiveIsMobile ? formatCountdown(timeoutCountdown) : `Time: ${formatCountdown(timeoutCountdown)}`}
                 </span>
               )}
               {gameMode === GameMode.AI && (
@@ -3362,10 +3368,10 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
       
       {/* Desktop Menu Popup - Show for both home and game views */}
       {(() => {
-        const shouldRender = !isMobile && isMenuOpen;
+        const shouldRender = !effectiveIsMobile && isMenuOpen;
         if (typeof window !== 'undefined' && window.console) {
           window.console.log('[MENU RENDER] Menu check:', JSON.stringify({
-            isMobile,
+            effectiveIsMobile,
             isMenuOpen,
             showGame,
             shouldRender
@@ -3532,7 +3538,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
       )}
       
       {/* Desktop Windows */}
-      {!isMobile && openWindows.has('leaderboard') && (
+      {!effectiveIsMobile && openWindows.has('leaderboard') && (
         <Popup
           id="leaderboard-window"
           isOpen={true}
@@ -3592,7 +3598,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         </Popup>
       )}
       
-      {!isMobile && openWindows.has('gallery') && (
+      {!effectiveIsMobile && openWindows.has('gallery') && (
         <Popup
           id="gallery-window"
           isOpen={true}
@@ -3608,7 +3614,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         </Popup>
       )}
       
-      {!isMobile && openWindows.has('moves') && showGame && (
+      {!effectiveIsMobile && openWindows.has('moves') && showGame && (
         <Popup
           id="moves-window"
           isOpen={true}
@@ -3630,12 +3636,12 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
       )}
       
       {(() => {
-        if (!isMobile && typeof window !== 'undefined' && window.console) {
+        if (!effectiveIsMobile && typeof window !== 'undefined' && window.console) {
           window.console.log('[DEBUG] openWindows:', Array.from(openWindows), 'has profile:', openWindows.has('profile'));
         }
         return null;
       })()}
-      {!isMobile && openWindows.has('profile') && (
+      {!effectiveIsMobile && openWindows.has('profile') && (
         <Popup
           id="profile-window"
           isOpen={true}
@@ -3650,11 +3656,11 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
           initialSize={{ width: 400, height: 500 }}
           zIndex={1000}
         >
-          <PlayerProfile isMobile={false} />
+          <PlayerProfile effectiveIsMobile={false} />
         </Popup>
       )}
 
-      {!isMobile && openWindows.has('howto') && (
+      {!effectiveIsMobile && openWindows.has('howto') && (
         <Popup
           id="howto-window"
           isOpen={true}
@@ -3671,16 +3677,16 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
       {(() => {
         if (typeof window !== 'undefined' && window.console) {
           window.console.log('[LEADERBOARD] Checking popup render condition:', {
-            isMobile,
+            effectiveIsMobile,
             viewingProfileAddress,
-            shouldRender: !isMobile && !!viewingProfileAddress
+            shouldRender: !effectiveIsMobile && !!viewingProfileAddress
           });
         }
         return null;
       })()}
       
       {/* Profile popup - rendered in home view */}
-      {!isMobile && viewingProfileAddress && (
+      {!effectiveIsMobile && viewingProfileAddress && (
         <Popup
           id="view-profile-window"
           isOpen={true}
@@ -3701,7 +3707,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
             }
             return null;
           })()}
-          <PlayerProfile isMobile={false} address={viewingProfileAddress} />
+          <PlayerProfile effectiveIsMobile={false} address={viewingProfileAddress} />
         </Popup>
       )}
     </div>

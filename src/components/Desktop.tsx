@@ -62,7 +62,7 @@ const getIconSpacing = () => {
   if (typeof window !== 'undefined' && isBaseMiniApp()) {
     return {
       hGap: 20, // More horizontal spacing in Base Mini App
-      vGap: 40, // Much more vertical padding in Base Mini App to prevent overlap
+      vGap: 20, // Reduced vertical spacing to prevent icons from going off-screen
       startLeft: 12,
       startTop: 60 // Account for header/navbar
     };

@@ -13,6 +13,7 @@ import { firebaseChess } from '../firebaseChess';
 import { firebaseProfiles } from '../firebaseProfiles';
 import { database } from '../firebaseApp';
 import { ref, push, onValue, off, query, orderByChild, limitToLast } from 'firebase/database';
+import { isBaseMiniApp } from '../utils/baseMiniapp';
 import './ChessMultiplayer.css';
 import { BrowserProvider, Contract } from 'ethers';
 import { TokenSelector } from './TokenSelector';
@@ -81,7 +82,7 @@ interface ChessMultiplayerProps {
   onGameStart?: (inviteCode?: string) => void;
   onChatToggle?: () => void;
   isChatMinimized?: boolean;
-  isMobile?: boolean;
+  effectiveIsMobile?: boolean;
 }
 
 // Piece gallery data - will be updated dynamically based on selected piece set
@@ -127,7 +128,11 @@ async function getPlayerInviteCodeFromContract(address: string, contractAddress:
   }
 }
 
-export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, isMobile = false }) => {
+export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onMinimize, fullscreen = false, onBackToModeSelect, onGameStart, onChatToggle, isChatMinimized, effectiveIsMobile = false }) => {
+  // Detect Base Mini App for proper formatting
+  const isBaseApp = typeof window !== 'undefined' && isBaseMiniApp();
+  // Use Base Mini App detection or passed effectiveIsMobile prop
+  const effectiveIsMobile = isBaseApp || effectiveIsMobile;
 
   const { address, isConnected, chainId } = useAccount();
   const { switchChain } = useSwitchChain();
@@ -925,16 +930,16 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
   };
   
   const openHowToGuide = useCallback(() => {
-    if (isMobile) {
+    if (effectiveIsMobile) {
       setSidebarView('howto');
       setIsSidebarOpen(false);
     } else {
       openWindow('howto');
     }
-  }, [isMobile, openWindow]);
+  }, [effectiveIsMobile, openWindow]);
   
   // Mobile sidebar state (unchanged)
-  const [sidebarView, setSidebarView] = useState<'moves' | 'leaderboard' | 'gallery' | 'chat' | 'profile' | 'howto' | null>(isMobile ? null : null);
+  const [sidebarView, setSidebarView] = useState<'moves' | 'leaderboard' | 'gallery' | 'chat' | 'profile' | 'howto' | null>(effectiveIsMobile ? null : null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Closed by default on mobile (popup mode)
   const [soundEnabled, setSoundEnabled] = useState(true);
   
@@ -1091,7 +1096,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
 
   // Mobile capabilities detection
   const mobileCapabilities = useMobileCapabilities();
-  const { isMobile: isMobileDevice, isLandscape, isTouchDevice, hasHapticFeedback, screenWidth, screenHeight } = mobileCapabilities;
+  const { effectiveIsMobile: effectiveIsMobileDevice, isLandscape, isTouchDevice, hasHapticFeedback, screenWidth, screenHeight } = mobileCapabilities;
 
   const handleTimeout = async () => {
     if (!inviteCode || !playerColor) return;
@@ -1175,17 +1180,17 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
 
   // Reload leaderboard when window opens (desktop) or sidebar view changes (mobile)
   useEffect(() => {
-    if (!isMobile && openWindows.has('leaderboard')) {
+    if (!effectiveIsMobile && openWindows.has('leaderboard')) {
       void loadLeaderboard();
     }
-  }, [openWindows, isMobile]);
+  }, [openWindows, effectiveIsMobile]);
   
   // Reload leaderboard when mobile sidebar view changes to leaderboard
   useEffect(() => {
-    if (isMobile && sidebarView === 'leaderboard') {
+    if (effectiveIsMobile && sidebarView === 'leaderboard') {
       void loadLeaderboard();
     }
-  }, [sidebarView, isMobile]);
+  }, [sidebarView, effectiveIsMobile]);
   const [lastMove, setLastMove] = useState<{ from: { row: number; col: number }; to: { row: number; col: number } } | null>(null);
   
   // Refs
@@ -5637,7 +5642,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
     const pieces = currentPlayer === 'blue' ? ['q', 'r', 'b', 'n'] : ['Q', 'R', 'B', 'N'];
     
     return (
-      <div className={`promotion-dialog ${isMobile ? 'mobile-promotion' : ''}`} style={{
+      <div className={`promotion-dialog ${effectiveIsMobile ? 'mobile-promotion' : ''}`} style={{
         position: 'fixed',
         top: '50%',
         left: '50%',
@@ -5645,30 +5650,30 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
         background: 'rgba(0, 0, 0, 0.9)',
         border: '2px solid gold',
         borderRadius: '8px',
-        padding: isMobile ? '15px' : '20px',
+        padding: effectiveIsMobile ? '15px' : '20px',
         zIndex: 1000,
-        minWidth: isMobile ? '280px' : '320px',
-        maxWidth: isMobile ? '90vw' : '400px'
+        minWidth: effectiveIsMobile ? '280px' : '320px',
+        maxWidth: effectiveIsMobile ? '90vw' : '400px'
       }}>
         <div className="promotion-content">
           <h3 style={{ 
             color: 'white', 
-            marginBottom: isMobile ? '10px' : '15px',
-            fontSize: isMobile ? '16px' : '18px',
+            marginBottom: effectiveIsMobile ? '10px' : '15px',
+            fontSize: effectiveIsMobile ? '16px' : '18px',
             textAlign: 'center'
           }}>
             Choose promotion piece:
           </h3>
-          <div className={`promotion-pieces ${isMobile ? 'mobile-promotion-grid' : ''}`} style={{ 
+          <div className={`promotion-pieces ${effectiveIsMobile ? 'mobile-promotion-grid' : ''}`} style={{ 
             display: 'flex', 
-            gap: isMobile ? '8px' : '10px',
-            flexWrap: isMobile ? 'wrap' : 'nowrap',
+            gap: effectiveIsMobile ? '8px' : '10px',
+            flexWrap: effectiveIsMobile ? 'wrap' : 'nowrap',
             justifyContent: 'center'
           }}>
             {pieces.map(piece => (
               <div
                 key={piece}
-                className={`promotion-piece ${isMobile ? 'mobile-promotion-piece' : ''}`}
+                className={`promotion-piece ${effectiveIsMobile ? 'mobile-promotion-piece' : ''}`}
                 onClick={() => {
                   executeMove(promotionMove.from, promotionMove.to, piece);
                   setShowPromotion(false);
@@ -5682,14 +5687,14 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
                 }}
                 style={{
                   cursor: 'pointer',
-                  padding: isMobile ? '8px' : '10px',
+                  padding: effectiveIsMobile ? '8px' : '10px',
                   border: '2px solid white',
                   borderRadius: '4px',
                   background: 'rgba(255, 255, 255, 0.1)',
                   touchAction: 'manipulation',
                   WebkitTapHighlightColor: 'transparent',
-                  minWidth: isMobile ? '60px' : 'auto',
-                  minHeight: isMobile ? '60px' : 'auto',
+                  minWidth: effectiveIsMobile ? '60px' : 'auto',
+                  minHeight: effectiveIsMobile ? '60px' : 'auto',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
@@ -5699,8 +5704,8 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
                   src={pieceImages[piece]} 
                   alt={piece} 
                   style={{ 
-                    width: isMobile ? '32px' : '40px', 
-                    height: isMobile ? '32px' : '40px',
+                    width: effectiveIsMobile ? '32px' : '40px', 
+                    height: effectiveIsMobile ? '32px' : '40px',
                     pointerEvents: 'none'
                   }} 
                 />
@@ -5975,24 +5980,24 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
 
   // Main render - single container like ChessGame.tsx
   return (
-    <div className={`chess-game${showGame ? ' game-active' : ''} ${isMobile ? 'mobile mobile-device' : 'desktop'} ${isLandscape ? 'landscape-orientation' : 'portrait-orientation'}`}>
+    <div className={`chess-game${showGame ? ' game-active' : ''} ${effectiveIsMobile ? 'mobile mobile-device' : 'desktop'} ${isLandscape ? 'landscape-orientation' : 'portrait-orientation'}${isBaseApp ? ' baseapp' : ''}`}>
       {/* Linux-style Header - always show */}
       <ChessHeader
         onClose={onClose}
         onMenuClick={() => {
-          if (isMobile) {
+          if (effectiveIsMobile) {
             setIsSidebarOpen(prev => !prev);
           } else {
             setIsMenuOpen(prev => !prev);
           }
         }}
-        isMobile={isMobile}
+        effectiveIsMobile={effectiveIsMobile}
       />
       
       {/* Main Layout */}
-      <div className="game-stable-layout" style={{ paddingTop: '50px' }}>
+      <div className="game-stable-layout" style={{ paddingTop: '50px', paddingBottom: isBaseApp ? '50px' : '0' }}>
         {/* Mobile Sidebar Popup - Always available on mobile via menu button */}
-        {isMobile && (
+        {effectiveIsMobile && (
           <>
             {/* Mobile Popup Overlay */}
             {isSidebarOpen && (
@@ -6120,7 +6125,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
     )}
     
     {/* Mobile Content Popup - Shows content when a menu button is clicked */}
-    {isMobile && sidebarView && (
+    {effectiveIsMobile && sidebarView && (
       <>
         {/* Overlay */}
         <div 
@@ -6184,7 +6189,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
                               }}
                             >
                               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}>
-                                {!isMobile && (
+                                {!effectiveIsMobile && (
                                   <img 
                                     src={profilePicture}
                                     alt=""
@@ -6351,7 +6356,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
                   ← Back to Leaderboard
                 </button>
               )}
-              <PlayerProfile isMobile={true} address={viewingProfileAddress || undefined} />
+              <PlayerProfile effectiveIsMobile={true} address={viewingProfileAddress || undefined} />
             </div>
           )}
 
@@ -6376,21 +6381,21 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
               alignItems: 'center',
               justifyContent: 'flex-start',
               textAlign: 'center',
-              padding: isMobile ? '0' : '20px',
-              marginTop: isMobile ? '0' : '20px',
-              paddingTop: isMobile ? '0' : undefined,
-              paddingLeft: isMobile ? '12px' : undefined,
-              paddingRight: isMobile ? '12px' : undefined
+              padding: effectiveIsMobile ? '0' : '20px',
+              marginTop: effectiveIsMobile ? '0' : '20px',
+              paddingTop: effectiveIsMobile ? '0' : undefined,
+              paddingLeft: effectiveIsMobile ? '12px' : undefined,
+              paddingRight: effectiveIsMobile ? '12px' : undefined
             }}>
               <h2 style={{
                 color: '#ff0000',
                 fontFamily: 'Impact, Charcoal, sans-serif',
-                fontSize: isMobile ? '28px' : '48px',
+                fontSize: effectiveIsMobile ? '28px' : '48px',
                 fontWeight: 'bold',
                 textShadow: '0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000',
-                marginBottom: isMobile ? '4px' : '10px',
-                marginTop: isMobile ? '0' : undefined,
-                paddingTop: isMobile ? '0' : undefined,
+                marginBottom: effectiveIsMobile ? '4px' : '10px',
+                marginTop: effectiveIsMobile ? '0' : undefined,
+                paddingTop: effectiveIsMobile ? '0' : undefined,
                 textTransform: 'uppercase'
               }}>PVP CHESS LAWBY</h2>
               
@@ -6505,7 +6510,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
                         </div>
                         
                         {/* Chain Selector - Desktop only */}
-                        {!isMobile && (
+                        {!effectiveIsMobile && (
                           <ChainSelector
                             selectedChain={selectedChain}
                             onSelect={setSelectedChain}
@@ -6816,15 +6821,15 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
                 </span>
                 {gameMode === GameMode.ACTIVE && timeoutCountdown > 0 && (
                   <span className={`timer-display ${timeoutCountdown < 300 ? 'timer-warning' : ''} ${timeoutCountdown < 60 ? 'timer-critical' : ''}`}>
-                    {isMobile ? formatCountdown(timeoutCountdown) : `Time: ${formatCountdown(timeoutCountdown)}`}
+                    {effectiveIsMobile ? formatCountdown(timeoutCountdown) : `Time: ${formatCountdown(timeoutCountdown)}`}
                   </span>
                 )}
                 <span className="wager-display">
-                  {isMobile ? `${wager.toFixed(2)} ${currentGameToken}` : `Wager: ${wager.toFixed(6)} ${currentGameToken}`}
+                  {effectiveIsMobile ? `${wager.toFixed(2)} ${currentGameToken}` : `Wager: ${wager.toFixed(6)} ${currentGameToken}`}
                 </span>
                 {opponent && (
                   <span className="opponent-info">
-                    {isMobile ? `vs ${formatAddress(opponent).slice(0, 6)}...` : `vs ${formatAddress(opponent)}`}
+                    {effectiveIsMobile ? `vs ${formatAddress(opponent).slice(0, 6)}...` : `vs ${formatAddress(opponent)}`}
                   </span>
                 )}
               </div>
@@ -6920,7 +6925,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
       )}
       
       {/* Desktop Menu Popup */}
-      {!isMobile && isMenuOpen && (
+      {!effectiveIsMobile && isMenuOpen && (
         <div 
           className="chess-menu-popup-overlay"
           onClick={() => setIsMenuOpen(false)}
@@ -7083,7 +7088,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
       )}
       
       {/* Desktop Windows */}
-      {!isMobile && openWindows.has('leaderboard') && (
+      {!effectiveIsMobile && openWindows.has('leaderboard') && (
         <Popup
           id="leaderboard-window"
           isOpen={true}
@@ -7102,7 +7107,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
                   return (
                     <div key={entry.username} className="leaderboard-entry" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 0', gap: '8px' }}>
                       <span className="rank">#{index + 1}</span>
-                      {!isMobile && (
+                      {!effectiveIsMobile && (
                         <img 
                           src={profilePicture}
                           alt=""
@@ -7145,7 +7150,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
         </Popup>
       )}
       
-      {!isMobile && openWindows.has('gallery') && (
+      {!effectiveIsMobile && openWindows.has('gallery') && (
         <Popup
           id="gallery-window"
           isOpen={true}
@@ -7201,7 +7206,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
         </Popup>
       )}
       
-      {!isMobile && openWindows.has('moves') && (gameMode === GameMode.ACTIVE || gameMode === GameMode.FINISHED) && (
+      {!effectiveIsMobile && openWindows.has('moves') && (gameMode === GameMode.ACTIVE || gameMode === GameMode.FINISHED) && (
         <Popup
           id="moves-window"
           isOpen={true}
@@ -7222,7 +7227,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
         </Popup>
       )}
       
-      {!isMobile && openWindows.has('profile') && (
+      {!effectiveIsMobile && openWindows.has('profile') && (
         <Popup
           id="profile-window"
           isOpen={true}
@@ -7232,11 +7237,11 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
           initialSize={{ width: 400, height: 500 }}
           zIndex={1000}
         >
-          <PlayerProfile isMobile={false} />
+          <PlayerProfile effectiveIsMobile={false} />
         </Popup>
       )}
 
-      {!isMobile && openWindows.has('howto') && (
+      {!effectiveIsMobile && openWindows.has('howto') && (
         <Popup
           id="howto-window"
           isOpen={true}
@@ -7250,7 +7255,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
         </Popup>
       )}
       
-      {!isMobile && viewingProfileAddress && (
+      {!effectiveIsMobile && viewingProfileAddress && (
         <Popup
           id="view-profile-window"
           isOpen={true}
@@ -7271,7 +7276,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
             }
             return null;
           })()}
-          <PlayerProfile isMobile={false} address={viewingProfileAddress} />
+          <PlayerProfile effectiveIsMobile={false} address={viewingProfileAddress} />
         </Popup>
       )}
       
