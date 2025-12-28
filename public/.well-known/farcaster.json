@@ -1,8 +1,8 @@
 {
   "accountAssociation": {
-    "header": "eyJmaWQiOjM2MDgsInR5cGUiOiJhdXRoIiwia2V5IjoiMHhiOTdmNGI4MGJkQjhiNzcyMmM1M0IxN0QxN2M5OTQzMjlFMjc2N0I2In0",
-    "payload": "eyJkb21haW4iOiJsYXdiLnh5eiJ9",
-    "signature": "AAAAAAAAAAAAAAAAyhG94Fl3s2MRZwKIYr4qFzl2yhEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAqSCrVbLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAul7REO_bo9AFv8iC11NYrLu4WEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbQ_-6NvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAURICoVo6Yg5tbo__NGsUrKsz8C_YQhixKUyIEp5tV-gQV5GW9LMWHEmH7_6fUewhlgJK7JsDuWZ31o7Q9_kyKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAACAmGlsLesJv6yQ0o-F7NUk9pKLPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA-FIQshzFAwL0d7pWaG0gGdybZ63hWwqMROytRWUz0BEOrSzgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB7_iOgz_WJWeE1wnPObGn7_QLZbnEVXtG73vnvAUUs6kNalHJVOlcYLVkQutoeD-uDQ841fcgXyG2M2XNQA-aVgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAl8ZgIay2xclZzG8RWZzuWvO8j9R0fus3XxDee9lRlVy8dAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD3eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiRVNiN29PNUlPWlpTMklGdXk2aEM0YmNLMEFDVTlXTmhDWUZ4YWZEZkk5cyIsIm9yaWdpbiI6Imh0dHBzOi8va2V5cy5jb2luYmFzZS5jb20iLCJjcm9zc09yaWdpbiI6ZmFsc2UsIm90aGVyX2tleXNfY2FuX2JlX2FkZGVkX2hlcmUiOiJkbyBub3QgY29tcGFyZSBjbGllbnREYXRhSlNPTiBhZ2FpbnN0IGEgdGVtcGxhdGUuIFNlZSBodHRwczovL2dvby5nbC95YWJQZXgifQAAAAAAAAAAAGSSZJJkkmSSZJJkkmSSZJJkkmSSZJJkkmSSZJJkkmSS"
+    "header": "",
+    "payload": "",
+    "signature": ""
   },
   "baseBuilder": {
     "ownerAddress": "0xb97f4b80bdB8b7722c53B17D17c994329E2767B6"
@@ -10,26 +10,26 @@
   "miniapp": {
     "version": "1",
     "name": "LAWB",
-    "homeUrl": "https://base.lawb.xyz?v=2",
-    "iconUrl": "https://base.lawb.xyz/assets/chessicon.png",
-    "imageUrl": "https://base.lawb.xyz/assets/hero.png",
+    "homeUrl": "https://lawb.netlify.app",
+    "iconUrl": "https://lawb.netlify.app/assets/chessicon.png",
+    "imageUrl": "https://lawb.netlify.app/assets/hero.png",
     "buttonTitle": "Launch LAWB",
-    "splashImageUrl": "https://base.lawb.xyz/assets/splash.png",
+    "splashImageUrl": "https://lawb.netlify.app/assets/splash.png",
     "splashBackgroundColor": "#000080",
     "subtitle": "there is no meme we lawb you",
     "description": "Lawbsters seem nice but a human controlled by a lobster would never amount to anything without a roadmap.",
     "screenshotUrls": [
-      "https://base.lawb.xyz/assets/appchess.jpg",
-      "https://base.lawb.xyz/assets/apphome.jpg",
-      "https://base.lawb.xyz/assets/appmeme.PNG"
+      "https://lawb.netlify.app/assets/appchess.jpg",
+      "https://lawb.netlify.app/assets/apphome.jpg",
+      "https://lawb.netlify.app/assets/appmeme.PNG"
     ],
     "primaryCategory": "social",
     "tags": ["meme", "chess", "nft", "base", "lawb"],
-    "heroImageUrl": "https://base.lawb.xyz/assets/hero.png",
+    "heroImageUrl": "https://lawb.netlify.app/assets/hero.png",
     "tagline": "there is no meme we lawb you",
     "ogTitle": "there is no meme we lawb you",
     "ogDescription": "Lawbsters Headquaters",
-    "ogImageUrl": "https://base.lawb.xyz/assets/hero.png",
+    "ogImageUrl": "https://lawb.netlify.app/assets/hero.png",
     "noindex": false
   }
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { ThemeToggle } from './ThemeToggle';
 import { isBaseMiniApp } from '../utils/baseMiniapp';
+import { openUrl } from '../utils/baseMiniapp';
 
 interface TaskbarStyleProps {
   isOpen: boolean;
@@ -220,6 +221,11 @@ const Taskbar: React.FC<TaskbarProps> = ({ minimizedWindows, onRestoreWindow, wa
     setIsMenuOpen(false);
   };
 
+  const handleMenuLinkClickWithUrl = async (url: string) => {
+    setIsMenuOpen(false);
+    await openUrl(url, '_blank');
+  };
+
   return (
     <div className={classes.taskbar}>
       <div className={classes.leftSection}>
@@ -323,78 +329,62 @@ const Taskbar: React.FC<TaskbarProps> = ({ minimizedWindows, onRestoreWindow, wa
             borderTop: '1px solid #fff',
             borderBottom: '1px solid #808080'
           }} />
-          <a 
-            href="https://www.geckoterminal.com/solana/pools/DTxVuYphEobWo66afEfP9MfGt2E14C6UfeXnvXWnvep?embed=1&info=1&swaps=0&grayscale=0&light_chart=0&chart_type=market_cap&resolution=15m" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={classes.menuLink} 
-            onClick={handleMenuLinkClick}
+          <button
+            className={classes.menuLink}
+            onClick={() => handleMenuLinkClickWithUrl('https://www.geckoterminal.com/solana/pools/DTxVuYphEobWo66afEfP9MfGt2E14C6UfeXnvXWnvep?embed=1&info=1&swaps=0&grayscale=0&light_chart=0&chart_type=market_cap&resolution=15m')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }}
           >
             GeckoTerminal
-          </a>
-          <a 
-            href="https://x.com/lawbstation" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={classes.menuLink} 
-            onClick={handleMenuLinkClick}
+          </button>
+          <button
+            className={classes.menuLink}
+            onClick={() => handleMenuLinkClickWithUrl('https://x.com/lawbstation')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }}
           >
             LawbStation Twitter
-          </a>
-          <a 
-            href="https://x.com/lawbnexus" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={classes.menuLink} 
-            onClick={handleMenuLinkClick}
+          </button>
+          <button
+            className={classes.menuLink}
+            onClick={() => handleMenuLinkClickWithUrl('https://x.com/lawbnexus')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }}
           >
             LawbNexus Twitter
-          </a>
-          <a 
-            href="https://v2.nftx.io/vault/0xdb98a1ae711d8bf186a8da0e81642d81e0f86a05/info/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={classes.menuLink} 
-            onClick={handleMenuLinkClick}
+          </button>
+          <button
+            className={classes.menuLink}
+            onClick={() => handleMenuLinkClickWithUrl('https://v2.nftx.io/vault/0xdb98a1ae711d8bf186a8da0e81642d81e0f86a05/info/')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }}
           >
             NFTX - Lawbsters
-          </a>
-          <a 
-            href="https://uwu.pro/memoji/ulawb" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={classes.menuLink} 
-            onClick={handleMenuLinkClick}
+          </button>
+          <button
+            className={classes.menuLink}
+            onClick={() => handleMenuLinkClickWithUrl('https://uwu.pro/memoji/ulawb')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }}
           >
             UwU LAWB
-          </a>
-          <a 
-            href="https://t.me/lawblawblawb" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={classes.menuLink} 
-            onClick={handleMenuLinkClick}
+          </button>
+          <button
+            className={classes.menuLink}
+            onClick={() => handleMenuLinkClickWithUrl('https://t.me/lawblawblawb')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }}
           >
             Telegram
-          </a>
-          <a 
-            href="https://discord.gg/JdkzUHYmMy" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={classes.menuLink} 
-            onClick={handleMenuLinkClick}
+          </button>
+          <button
+            className={classes.menuLink}
+            onClick={() => handleMenuLinkClickWithUrl('https://discord.gg/JdkzUHYmMy')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }}
           >
             Discord
-          </a>
-          <a 
-            href="https://store.fun/lawbshop" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className={classes.menuLink} 
-            onClick={handleMenuLinkClick}
+          </button>
+          <button
+            className={classes.menuLink}
+            onClick={() => handleMenuLinkClickWithUrl('https://store.fun/lawbshop')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', width: '100%' }}
           >
             Lawb.Shop
-          </a>
+          </button>
           <div style={{ 
             height: '1px', 
             background: '#808080', 
