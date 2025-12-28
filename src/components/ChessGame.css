@@ -3425,7 +3425,7 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
-    padding-top: 50px !important; /* Account for fixed header */
+    padding-top: 0px !important; /* Remove padding - header is fixed, content starts immediately */
     min-height: 0 !important;
     height: auto !important;
     max-height: none !important;
@@ -3453,14 +3453,14 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    padding: 16px !important;
-    padding-top: 8px !important; /* Reduced top padding since header is fixed */
+    padding: 12px 16px !important;
+    padding-top: 4px !important; /* Minimal top padding - header is fixed */
     padding-bottom: 20px !important; /* Extra bottom padding for navbar */
     box-sizing: border-box !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 16px !important; /* Increased gap to prevent overlap */
+    gap: 8px !important; /* Reduced gap to prevent excessive spacing */
     /* ROOT FIX: Don't force height - let content determine height */
     height: auto !important;
     min-height: auto !important;
@@ -3483,11 +3483,14 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     width: auto !important;
     max-width: 100% !important;
     display: flex !important;
+    flex-direction: column !important; /* Stack buttons vertically */
     justify-content: center !important;
+    align-items: center !important;
     align-self: center !important; /* Prevent flex child from stretching to full width */
     flex-shrink: 0 !important; /* Prevent shrinking */
-    gap: 12px !important; /* Space between buttons */
+    gap: 8px !important; /* Space between buttons - reduced to prevent overlap */
     margin: 0 !important;
+    margin-top: 4px !important; /* Small top margin for spacing from title */
     padding: 0 !important;
   }
   
@@ -3496,9 +3499,11 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
   .chess-game.baseapp .piece-set-selection-panel > div[style*="display:flex"],
   .chess-game.mobile .difficulty-selection-panel > div[style*="display:flex"],
   .chess-game.baseapp .difficulty-selection-panel > div[style*="display:flex"] {
-    flex-wrap: wrap !important;
+    flex-direction: column !important; /* Force vertical stacking */
+    flex-wrap: nowrap !important; /* Prevent wrapping that causes overlap */
     justify-content: center !important;
     align-items: center !important;
+    gap: 8px !important; /* Consistent gap */
   }
   
   .chess-game.mobile .piece-set-selection-panel button,
@@ -3515,9 +3520,10 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
     /* Preserve inline styles for padding and sizing */
   }
   
-  /* Fix difficulty button container to prevent overlap */
-  .chess-game.mobile .difficulty-selection-panel > div[style*="display:flex"],
-  .chess-game.baseapp .difficulty-selection-panel > div[style*="display:flex"] {
+  /* Fix difficulty button container to prevent overlap - horizontal layout for Easy/Hard buttons */
+  .chess-game.mobile .difficulty-selection-panel > div[style*="display:flex"][style*="gap"],
+  .chess-game.baseapp .difficulty-selection-panel > div[style*="display:flex"][style*="gap"] {
+    flex-direction: row !important; /* Horizontal for Easy/Hard buttons */
     flex-wrap: wrap !important;
     justify-content: center !important;
     gap: 12px !important;
@@ -3557,7 +3563,8 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
   .lawb-app-light-mode .difficulty-selection-panel button,
   .lawb-app-light-mode .difficulty-selection-panel button span {
     /* Don't override - let inline styles take precedence */
-    /* This empty rule block ensures these selectors exist but don't force colors */
+    /* This rule block ensures these selectors exist but don't force colors */
+    color: inherit;
   }
   
   .lawb-app-dark-mode .piece-set-selection-panel button,
@@ -3565,7 +3572,8 @@ div.chess-game.baseapp div.game-stable-layout.home-view {
   .lawb-app-dark-mode .difficulty-selection-panel button,
   .lawb-app-dark-mode .difficulty-selection-panel button span {
     /* Don't override - let inline styles take precedence */
-    /* This empty rule block ensures these selectors exist but don't force colors */
+    /* This rule block ensures these selectors exist but don't force colors */
+    color: inherit;
   }
   
   /* REMOVED DUPLICATE - This rule is already defined above with align-self: center */

@@ -1449,6 +1449,12 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
     playStartSound();
     console.log('[DEBUG] startGame called, difficulty:', difficulty, 'gameMode:', gameMode);
     
+    // CRITICAL: Ensure pieceImages are initialized before starting game
+    pieceImages = selectedPieceSet.pieceImages;
+    console.log('[PIECE IMAGES] startGame - pieceImages initialized:', Object.keys(pieceImages).length, 'pieces');
+    console.log('[PIECE IMAGES] startGame - pieceImages keys:', Object.keys(pieceImages));
+    console.log('[PIECE IMAGES] startGame - selectedPieceSet:', selectedPieceSet.id, selectedPieceSet.name);
+    
     if (gameMode === 'online') {
       // For multiplayer, we'll show the multiplayer component instead
       setShowGame(false);
@@ -1553,9 +1559,15 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
     // Debug: log if piece exists but no image
     if (piece && !pieceImages[piece]) {
       console.warn('[PIECE RENDER] Piece exists but no image:', piece, 'pieceImages keys:', Object.keys(pieceImages));
+      console.warn('[PIECE RENDER] selectedPieceSet:', selectedPieceSet.id, selectedPieceSet.name);
+      // Force re-initialize pieceImages if missing
+      pieceImages = selectedPieceSet.pieceImages;
+      console.warn('[PIECE RENDER] Re-initialized pieceImages, now has:', Object.keys(pieceImages).length, 'pieces');
     }
 
-  return (
+    const pieceImageUrl = piece ? pieceImages[piece] : null;
+    
+    return (
       <div
         key={`${row}-${col}`}
         className={`square ${isSelected ? 'selected' : ''} ${isLegalMove ? 'legal-move' : ''} ${isLastMove ? 'last-move' : ''}`}
@@ -1563,16 +1575,36 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         onTouchStart={(e) => handleTouchStart(row, col, e)}
         onTouchMove={handleTouchMove}
       >
-        {piece && (
+        {piece && pieceImageUrl && (
           <div
             className="piece"
             style={{
-              backgroundImage: pieceImages[piece] ? `url(${pieceImages[piece]})` : undefined,
+              backgroundImage: `url(${pieceImageUrl})`,
               backgroundSize: 'contain',
               backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center'
+              backgroundPosition: 'center',
+              width: '100%',
+              height: '100%',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              zIndex: 2
             }}
           />
+        )}
+        {piece && !pieceImageUrl && (
+          <div style={{ 
+            position: 'absolute', 
+            top: '50%', 
+            left: '50%', 
+            transform: 'translate(-50%, -50%)',
+            color: piece === piece.toUpperCase() ? '#ff0000' : '#0000ff',
+            fontWeight: 'bold',
+            fontSize: '24px',
+            zIndex: 2
+          }}>
+            {piece}
+          </div>
         )}
         {isLegalMove && <div className="legal-move-indicator" />}
       </div>
@@ -1681,11 +1713,11 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
       <div className="piece-set-selection-row" style={{ justifyContent: 'center' }}>
         <div className="piece-set-controls-col">
           <div className="piece-set-selection-panel" style={{background:'transparent',borderRadius:0,padding: effectiveIsMobile ? '8px 12px' : '32px 24px',paddingTop: effectiveIsMobile ? '4px' : undefined,marginTop: effectiveIsMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
-            <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '8px' : 16,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Chess Set</h2>
-            <p style={{fontSize:'1.1rem',color:'#ff0000',marginBottom:24,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Choose your preferred chess set.</p>
+            <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '4px' : 8,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Chess Set</h2>
+            <p style={{fontSize: effectiveIsMobile ? '0.9rem' : '1.1rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '12px' : 16,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Choose your preferred chess set.</p>
             
             {/* Piece Set Dropdown */}
-            <div style={{display:'flex',justifyContent:'center',marginBottom: effectiveIsMobile ? '16px' : '24px', width: '100%'}}>
+            <div style={{display:'flex',justifyContent:'center',marginBottom: effectiveIsMobile ? '8px' : '16px', width: '100%'}}>
               <div style={{ position: 'relative', minWidth: '200px', width: '100%', maxWidth: '300px' }}>
                 <button
                   type="button"
@@ -1741,7 +1773,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               </div>
             </div>
 
-            <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '8px' : '16px', marginBottom: '8px'}}>
+            <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '4px' : '8px', marginBottom: '4px'}}>
               <button 
                 className={`piece-set-btn start-btn`}
                 onClick={() => { setShowPieceSetSelector(false); setShowDifficulty(true); }}
@@ -1749,8 +1781,8 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                   background: 'transparent',
                   color: '#ff0000',
                   fontWeight: 'bold',
-                  fontSize: effectiveIsMobile ? '1.1em' : '1.3em',
-                  padding: effectiveIsMobile ? '14px 32px' : '18px 48px',
+                  fontSize: effectiveIsMobile ? '1em' : '1.2em',
+                  padding: effectiveIsMobile ? '12px 24px' : '16px 40px',
                   borderRadius: 0,
                   boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
                   border: '1px solid #ff0000',
@@ -1770,7 +1802,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
             </div>
 
             {/* Back to Chess Button */}
-            <div style={{marginTop: '16px', display: 'flex', justifyContent: 'center', width: 'auto', maxWidth: '100%'}}>
+            <div style={{marginTop: '8px', display: 'flex', justifyContent: 'center', width: 'auto', maxWidth: '100%'}}>
               <button
                 onClick={() => navigateTo('/chess')}
                 style={{ 
@@ -1802,9 +1834,9 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
     <div className="difficulty-selection-row" style={{ justifyContent: 'center' }}>
       <div className="difficulty-controls-col">
         <div className="difficulty-selection-panel" style={{background:'transparent',borderRadius:0,padding: effectiveIsMobile ? '8px 12px' : '32px 24px',paddingTop: effectiveIsMobile ? '4px' : undefined,marginTop: effectiveIsMobile ? '0' : undefined,boxShadow:'none',textAlign:'center'}}>
-          <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '8px' : 16,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Difficulty</h2>
-          <p style={{fontSize: effectiveIsMobile ? '1em' : '1.1rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '16px' : '24px',textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Compete against the computer to climb the leaderboard.</p>
-          <div style={{display:'flex',justifyContent:'center',gap: effectiveIsMobile ? '12px' : '16px',marginBottom: effectiveIsMobile ? '16px' : '24px', flexWrap: 'wrap', width: '100%'}}>
+          <h2 style={{fontWeight:700,letterSpacing:1,fontSize: effectiveIsMobile ? '1.5rem' : '2rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '4px' : 8,marginTop: effectiveIsMobile ? '0' : undefined,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Select Difficulty</h2>
+          <p style={{fontSize: effectiveIsMobile ? '0.9rem' : '1.1rem',color:'#ff0000',marginBottom: effectiveIsMobile ? '12px' : 16,textShadow:'0 0 6px #ff0000, 0 0 2px #ff0000'}}>Compete against the computer to climb the leaderboard.</p>
+          <div style={{display:'flex',justifyContent:'center',gap: effectiveIsMobile ? '12px' : '16px',marginBottom: effectiveIsMobile ? '8px' : '16px', flexWrap: 'wrap', width: '100%'}}>
             <button
               className={`difficulty-btn${difficulty === 'easy' ? ' selected' : ''}`}
               style={{
@@ -1842,7 +1874,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
               onClick={()=>setDifficulty('hard')}
             >Hard</button>
           </div>
-          <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '8px' : '16px', marginBottom: '8px'}}>
+          <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: effectiveIsMobile ? '4px' : '8px', marginBottom: '4px'}}>
             <button 
               className={`difficulty-btn start-btn`}
               onClick={() => { startGame(); }}
@@ -1850,8 +1882,8 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
                 background: 'transparent',
                 color: '#ff0000',
                 fontWeight: 'bold',
-                fontSize: effectiveIsMobile ? '1.1em' : '1.3em',
-                padding: effectiveIsMobile ? '14px 32px' : '18px 48px',
+                fontSize: effectiveIsMobile ? '1em' : '1.2em',
+                padding: effectiveIsMobile ? '12px 24px' : '16px 40px',
                 borderRadius: 0,
                 boxShadow: '0 0 6px #ff0000, 0 0 2px #ff0000',
                 border: '1px solid #ff0000',
@@ -2906,7 +2938,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
         }}
         isMobile={effectiveIsMobile}
       />
-      <div className={`game-stable-layout ${effectiveIsMobile ? 'mobile-layout' : 'desktop-layout'}`} style={{ paddingTop: '50px', paddingBottom: isBaseApp ? '50px' : '0' }}>
+      <div className={`game-stable-layout ${effectiveIsMobile ? 'mobile-layout' : 'desktop-layout'}`} style={{ paddingTop: isBaseApp ? '0px' : '50px', paddingBottom: isBaseApp ? '50px' : '0' }}>
         {/* Mobile Sidebar Popup - Always available on mobile via menu button */}
         {effectiveIsMobile && (
           <>
