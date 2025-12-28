@@ -4,7 +4,7 @@ import Desktop from './components/Desktop';
 import LinuxNavbar from './components/LinuxNavbar';
 import { ThemeToggle } from './components/ThemeToggle';
 import { useAccount } from 'wagmi';
-import { initBaseMiniApp, getSafeAreaInsets, applySafeAreaInsets, triggerHapticImpact, triggerHapticSelection, triggerHapticNotification } from './utils/baseMiniapp';
+import { initBaseMiniApp, getSafeAreaInsets, applySafeAreaInsets, triggerHapticImpact, triggerHapticSelection, triggerHapticNotification, openUrl, navigateTo } from './utils/baseMiniapp';
 import { lazy, Suspense } from 'react';
 import Popup from './components/Popup';
 import { PlayerProfile } from './components/PlayerProfile';
@@ -119,12 +119,12 @@ function App() {
     await triggerHapticImpact('light');
     
     if (url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
+      await openUrl(url, '_blank');
       return;
     }
 
     if (action === 'chess') {
-      window.location.href = '/chess';
+      navigateTo('/chess');
       return;
     }
 

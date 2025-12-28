@@ -28,6 +28,7 @@ import { PlayerProfile } from './PlayerProfile';
 import { HowToContent } from './HowToContent';
 import { ThemeToggle } from './ThemeToggle';
 import ChessHeader from './ChessHeader';
+import { navigateTo } from '../utils/baseMiniapp';
 
 // Get contract address based on current network
 const getContractAddress = (chainId: number) => {
@@ -6453,7 +6454,7 @@ export const ChessMultiplayer: React.FC<ChessMultiplayerProps> = ({ onClose, onM
                       </button>
 
                       <button 
-                        onClick={() => window.location.href = '/chess'}
+                        onClick={() => navigateTo('/chess')}
                         style={{ 
                           background: 'rgba(255, 0, 0, 0.1)',
                           border: '2px solid #ff0000',

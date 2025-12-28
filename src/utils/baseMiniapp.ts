@@ -419,6 +419,51 @@ export const resetBaseMiniAppCaches = (): void => {
   safeAreaInsetsChecked = false;
 };
 
+/**
+ * Navigation Utilities
+ * Use SDK actions for navigation instead of window.open() or window.location
+ * This ensures proper cross-client compatibility per Farcaster miniapp guidelines
+ */
+
+/**
+ * Open an external URL using SDK actions
+ * Falls back to window.open() if SDK is not available
+ */
+export const openUrl = async (url: string, target: '_blank' | '_self' = '_blank'): Promise<void> => {
+  try {
+    // Check if SDK is available and has actions
+    if (sdk && sdk.actions && typeof sdk.actions.openUrl === 'function') {
+      await sdk.actions.openUrl(url);
+      console.log('[Navigation] Opened URL via SDK:', url);
+    } else {
+      // Fallback to window.open for non-miniapp contexts
+      if (target === '_blank') {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      } else {
+        window.location.href = url;
+      }
+      console.log('[Navigation] Opened URL via window:', url);
+    }
+  } catch (error) {
+    console.error('[Navigation] Error opening URL:', error);
+    // Fallback on error
+    if (target === '_blank') {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      window.location.href = url;
+    }
+  }
+};
+
+/**
+ * Navigate to an internal route
+ * For internal navigation, use window.location or React Router
+ * SDK actions are for external URLs only
+ */
+export const navigateTo = (path: string): void => {
+  window.location.href = path;
+};
+
 
 
 

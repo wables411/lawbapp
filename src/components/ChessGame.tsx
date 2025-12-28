@@ -18,6 +18,7 @@ import { PlayerProfile } from './PlayerProfile';
 import { HowToContent } from './HowToContent';
 import { ThemeToggle } from './ThemeToggle';
 import ChessHeader from './ChessHeader';
+import { navigateTo } from '../utils/baseMiniapp';
 
 import './ChessGame.css';
 
@@ -1771,7 +1772,7 @@ export const ChessGame: React.FC<ChessGameProps> = ({ onClose, onMinimize, fulls
             {/* Back to Chess Button */}
             <div style={{marginTop: '16px', display: 'flex', justifyContent: 'center', width: 'auto', maxWidth: '100%'}}>
               <button
-                onClick={() => window.location.href = '/chess'}
+                onClick={() => navigateTo('/chess')}
                 style={{ 
                   background: 'transparent',
                   color: '#ff0000',

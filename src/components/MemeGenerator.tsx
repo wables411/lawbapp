@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { getCollectionNFTs, getOpenSeaNFTs, getOpenSeaSolanaNFTs } from '../mint';
 import { v4 as uuidv4 } from 'uuid';
+import { openUrl } from '../utils/baseMiniapp';
 
 const useStyles = createUseStyles({
   container: {
@@ -735,7 +736,7 @@ function MemeGenerator() {
       } catch {
         // ignore clipboard errors
       }
-      window.open(imageUrl, '_blank');
+      await openUrl(imageUrl, '_blank');
     };
     
     let url = '';
@@ -744,28 +745,28 @@ function MemeGenerator() {
       case 'x':
         url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
         await prepareClipboardAndImage();
-        window.open(url, '_blank', 'width=550,height=420');
+        await openUrl(url, '_blank');
         alert('Text copied to clipboard and image opened in a new tab. Attach the image in the X composer.');
         break;
         
       case 'telegram':
         url = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(shareText)}`;
         await prepareClipboardAndImage();
-        window.open(url, '_blank');
+        await openUrl(url, '_blank');
         alert('Text copied to clipboard and image opened in a new tab. Attach the image in Telegram.');
         break;
         
       case 'base':
         await prepareClipboardAndImage();
         url = 'https://www.base.org/';
-        window.open(url, '_blank');
+        await openUrl(url, '_blank');
         alert('Text copied to clipboard and image opened in a new tab. Post it from your Base-connected app.');
         break;
         
       case 'farcaster':
         await prepareClipboardAndImage();
         url = `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}`;
-        window.open(url, '_blank');
+        await openUrl(url, '_blank');
         alert('Text copied to clipboard and image opened in a new tab. Attach the image in Farcaster.');
         break;
     }
